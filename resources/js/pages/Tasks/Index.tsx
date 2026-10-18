@@ -3,14 +3,13 @@ import { AppLayout } from '@/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
 import { Head, router } from '@inertiajs/react';
 
-interface Task {
-  id: number;
-  title: string;
-  status: 'do_zrobienia' | 'w_trakcie' | 'zakonczone';
-  priority: 'niski' | 'sredni' | 'wysoki';
-  projectName: string;
-  assigneeName: string | null;
-}
+
+
+type Task = App.Data.TaskData & {
+    priority?: 'niski' | 'sredni' | 'wysoki';
+    projectName?: string;
+    assigneeName?: string | null;
+};
 
 interface TasksIndexProps {
   tasks: {
