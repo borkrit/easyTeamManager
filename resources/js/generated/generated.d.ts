@@ -32,6 +32,8 @@ declare namespace App {
             name: string;
             email: string;
             role: string | null;
+            tasks_count: number | null;
+            projects_count: number | null;
             created_at: undefined | null;
         };
     }

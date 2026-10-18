@@ -14,6 +14,8 @@ class UserData extends Data
         public string $name,
         public string $email,
         public ?string $role,
+        public ?int $tasks_count,     
+        public ?int $projects_count, 
         public ?Carbon $created_at,
     ) {}
 }
