@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
+import { AppLayout } from '@/layouts/AppLayout';
+import { TeamTable } from '@/widgets';
 
 // interface TeamMember {
 //   id: number;
@@ -48,15 +50,16 @@ export default function TeamIndex({ members }: TeamIndexProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 p-6 md:p-10">
-      <Head title="Zespół - EasyRIPOK" />
 
-      {/* Заголовок страницы */}
+    <AppLayout title="Zarządzanie Zespołem">
+    <Head title="Zespół - EasyRIPOK" />
+   
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100">Zarządzanie Zespołem</h1>
+          <h2 className="text-2xl font-bold text-slate-100">Lista członków zespołu </h2>
           <p className="text-sm text-slate-400 mt-1">
-            Lista członków zespołu oraz przydzielanie ról i zadań
+            
           </p>
         </div>
         <Button variant="primary" size="md" onClick={() => setIsModalOpen(true)}>
@@ -64,59 +67,17 @@ export default function TeamIndex({ members }: TeamIndexProps) {
         </Button>
       </div>
 
-      {/* Таблица пользователей */}
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-slate-950/60 text-slate-400 border-b border-slate-800 uppercase text-xs tracking-wider">
-              <tr>
-                <th className="px-6 py-4 font-semibold">Imię i nazwisko</th>
-                <th className="px-6 py-4 font-semibold">Email</th>
-                <th className="px-6 py-4 font-semibold">Rola</th>
-                <th className="px-6 py-4 font-semibold text-center">Projekty</th>
-                <th className="px-6 py-4 font-semibold text-center">Zadania</th>
-                <th className="px-6 py-4 font-semibold text-right">Akcje</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800/60 text-slate-300">
-              {members.map((member) => {
-                const roleConfig = member?.role && roleBadges[member.role] || { label: member.role, variant: 'default' };
-
-                return (
-                  <tr key={member.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="px-6 py-4 font-medium text-slate-100 flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-full bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold uppercase text-xs">
-                        {member.name.slice(0, 2)}
-                      </div>
-                      <Link href={`/team/${member.id}`} className="hover:text-indigo-400 transition-colors">
-                        {member.name}
-                      </Link>
-                    </td>
-                    <td className="px-6 py-4 text-slate-400">{member.email}</td>
-                    <td className="px-6 py-4">
-                      <Badge variant={roleConfig.variant} size="sm">
-                        {roleConfig.label}
-                      </Badge>
-                    </td>
-                    <td className="px-6 py-4 text-center font-medium">{member.projects_count ?? 0}</td>
-                    <td className="px-6 py-4 text-center font-medium">{member.tasks_count ?? 0}</td>
-                    <td className="px-6 py-4 text-right">
-                      <Link
-                        href={`/team/${member.id}`}
-                        className="text-xs text-indigo-400 hover:text-indigo-300 font-medium underline"
-                      >
-                        Zobacz profil
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <TeamTable
+                users={users}
+                selectedUserIds={selectedUserIds}
+                onSelectAll={toggleSelectAll}
+                onSelectOne={toggleUserSelection}
+            />
         </div>
       </div>
 
-      {/* Модальное окно создания сотрудника */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl">
@@ -201,6 +162,7 @@ export default function TeamIndex({ members }: TeamIndexProps) {
           </div>
         </div>
       )}
-    </div>
+       </AppLayout>
+      
   );
 }

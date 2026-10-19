@@ -17,6 +17,8 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
    
     Route::get('/team', [TeamController::class, 'index'])->name('team.index');
     Route::post('/team', [TeamController::class, 'store'])->name('team.store');
