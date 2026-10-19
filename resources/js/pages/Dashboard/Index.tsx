@@ -2,6 +2,7 @@ import React from 'react';
 import { AppLayout } from '@/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
 import { Head, Link } from '@inertiajs/react';
+import { StatCard } from './components/StatCard';
 
 interface DashboardStats {
   totalProjects: number;
@@ -22,6 +23,8 @@ interface DashboardProps {
   stats: DashboardStats;
   recentTasks: RecentTask[];
 }
+
+
 
 export default function DashboardIndex({ stats, recentTasks }: DashboardProps) {
   return (
@@ -50,45 +53,10 @@ export default function DashboardIndex({ stats, recentTasks }: DashboardProps) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex items-center justify-between shadow-sm">
-          <div>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Wszystkie projekty</p>
-            <p className="text-3xl font-extrabold text-slate-100 mt-2">{stats.totalProjects}</p>
-          </div>
-          <div className="h-12 w-12 rounded-xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 text-xl">
-            📁
-          </div>
-        </div>
-
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex items-center justify-between shadow-sm">
-          <div>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Zadania w systemie</p>
-            <p className="text-3xl font-extrabold text-slate-100 mt-2">{stats.totalTasks}</p>
-          </div>
-          <div className="h-12 w-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-xl">
-            📋
-          </div>
-        </div>
-
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex items-center justify-between shadow-sm">
-          <div>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Ukończone zadania</p>
-            <p className="text-3xl font-extrabold text-emerald-400 mt-2">{stats.completedTasks}</p>
-          </div>
-          <div className="h-12 w-12 rounded-xl bg-emerald-600/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl">
-            ✅
-          </div>
-        </div>
-
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 flex items-center justify-between shadow-sm">
-          <div>
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Członkowie zespołu</p>
-            <p className="text-3xl font-extrabold text-slate-100 mt-2">{stats.totalTeamMembers}</p>
-          </div>
-          <div className="h-12 w-12 rounded-xl bg-purple-600/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-xl">
-            👥
-          </div>
-        </div>
+        <StatCard title="Wszystkie projekty" value={stats.totalProjects} icon="📁" colorTheme="indigo" />
+        <StatCard title="Zadania w systemie" value={stats.totalTasks} icon="📋" colorTheme="blue" />
+        <StatCard title="Ukończone zadania" value={stats.completedTasks} icon="✅" colorTheme="emerald" isHighlighted />
+        <StatCard title="Członkowie zespołu" value={stats.totalTeamMembers} icon="👥" colorTheme="purple" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -106,9 +74,11 @@ export default function DashboardIndex({ stats, recentTasks }: DashboardProps) {
                 <div key={task.id} className="py-3.5 flex items-center justify-between first:pt-0 last:pb-0">
                   <div className="space-y-1">
                     <p className="text-sm font-medium text-slate-200">{task.title}</p>
-                    <p className="text-xs text-slate-400">Projekt: <span className="text-slate-300 font-medium">{task.projectName}</span></p>
+                    <p className="text-xs text-slate-400">
+                      Projekt: <span className="text-slate-300 font-medium">{task.projectName}</span>
+                    </p>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div>
                     <span
                       className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${
                         task.status === 'zakonczone'
@@ -118,7 +88,11 @@ export default function DashboardIndex({ stats, recentTasks }: DashboardProps) {
                           : 'bg-slate-800 text-slate-400 border border-slate-700'
                       }`}
                     >
-                      {task.status === 'zakonczone' ? 'Ukończone' : task.status === 'w_trakcie' ? 'W trakcie' : 'Do zrobienia'}
+                      {task.status === 'zakonczone'
+                        ? 'Ukończone'
+                        : task.status === 'w_trakcie'
+                        ? 'W trakcie'
+                        : 'Do zrobienia'}
                     </span>
                   </div>
                 </div>
