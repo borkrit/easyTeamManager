@@ -10,9 +10,7 @@ use Inertia\Response;
 
 class ProjectController extends Controller
 {
-    /**
-     * Список проектов с участниками и подсчетом задач
-     */
+    
     public function index(): Response
     {
         $projects = Project::with(['users:id,name,email', 'tasks'])
@@ -51,9 +49,7 @@ class ProjectController extends Controller
         return redirect()->back()->with('success', 'Projekt został pomyślnie utworzony!');
     }
 
-    /**
-     * Детальная страница проекта (с его задачами и командой)
-     */
+    
     public function show(Project $project): Response
     {
         $project->load(['users:id,name,email', 'tasks.user:id,name']);
@@ -61,5 +57,29 @@ class ProjectController extends Controller
         return Inertia::render('Projects/Show', [
             'project' => $project,
         ]);
+    }
+
+    
+    public function update(Request $request, Project $project)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'user_ids' => 'nullable|array',
+            'user_ids.*' => 'exists:users,id',
+        ]);
+
+        $project->update([
+            'name' => $validated['name'],
+            'description' => $validated['description'] ?? null,
+        ]);
+
+        if (isset($validated['user_ids'])) {
+            $project->users()->sync($validated['user_ids']);
+        } else {
+            $project->users()->detach();
+        }
+
+        return redirect()->back()->with('success', 'Projekt został pomyślnie zaktualizowany!');
     }
 }
