@@ -1,4 +1,5 @@
 import { DataTable, Column } from '@/shared/ui/table';
+import { Link } from '@inertiajs/react';
 
 export type UiProject = {
     id: number;
@@ -27,7 +28,12 @@ export function ProjectTable({
             header: 'Nazwa projektu', 
             accessor: (project) => (
                 <div>
-                    <div className="font-medium text-slate-200">{project.name}</div>
+                    <Link
+                    href={`/projects/${project.id}`}
+                    className="font-medium text-slate-100 hover:text-indigo-400 transition-colors"
+                >
+                    {project.name}
+                </Link>
                     {project.description && (
                         <div className="text-xs text-slate-400 truncate max-w-md">{project.description}</div>
                     )}
@@ -78,10 +84,10 @@ export function ProjectTable({
         <DataTable
             data={projects}
             columns={columns}
-            selectable={true}
-            selectedIds={selectedIds}
-            onSelectAll={onSelectAll}
-            onSelectOne={onSelectOne}
+            // selectable={true}
+            // selectedIds={selectedIds}
+            // onSelectAll={onSelectAll}
+            // onSelectOne={onSelectOne}
             emptyText="Brak aktywnych projektów. Utwórz pierwszy projekt, aby zacząć."
         />
     );

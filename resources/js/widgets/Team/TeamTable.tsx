@@ -75,10 +75,10 @@ export function TeamTable({
         <DataTable
             data={users}
             columns={columns}
-            selectable={true}
-            selectedIds={selectedUserIds}
-            onSelectAll={onSelectAll}
-            onSelectOne={onSelectOne}
+            // selectable={true}
+            // selectedIds={selectedUserIds}
+            // onSelectAll={onSelectAll}
+            // onSelectOne={onSelectOne}
             emptyText="Brak członków zespołu w bazie."
         />
     );

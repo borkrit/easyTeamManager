@@ -1,6 +1,7 @@
 export { Header } from './Header';
 export { Sidebar } from './Sidebar';
-export { TaskTable } from './TaskTable';
-export { TeamTable } from './TeamTable';
-export { ProjectTable } from './ProjectTable';
-export type { UiProject } from './ProjectTable';
+export { TaskTable } from './Tasks/TaskTable';
+export { TeamTable } from './Team/TeamTable';
+export { ProjectTable } from './Projects/ProjectTable';
+export { CreateProjectModal } from './Projects/CreateProjectModal';
+export type { UiProject } from './Projects/ProjectTable';
