@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { Head } from '@inertiajs/react';
 import { AppLayout } from '@/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
-import { ProjectTable, UiProject } from '@/widgets/index';
+import { ProjectTable, UiProject, CreateProjectModal } from '@/widgets/index';
 
 interface ProjectsIndexProps {
     projects: UiProject[];
+    users?: { id: number; name: string }[];
 }
 
-export default function ProjectsIndex({ projects }: ProjectsIndexProps) {
+export default function ProjectsIndex({ projects, users = [] }: ProjectsIndexProps) {
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const toggleSelectAll = (checked: boolean) => {
         if (checked) {
@@ -40,7 +42,7 @@ export default function ProjectsIndex({ projects }: ProjectsIndexProps) {
                             Zaznaczono: {selectedIds.length}
                         </span>
                     )}
-                    <Button variant="primary" size="md">
+                    <Button variant="primary" size="md" onClick={() => setIsModalOpen(true)}>
                         + Nowy projekt
                     </Button>
                 </div>
@@ -51,6 +53,12 @@ export default function ProjectsIndex({ projects }: ProjectsIndexProps) {
                 selectedIds={selectedIds}
                 onSelectAll={toggleSelectAll}
                 onSelectOne={toggleSelectOne}
+            />
+
+            <CreateProjectModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                users={users}
             />
         </AppLayout>
     );
