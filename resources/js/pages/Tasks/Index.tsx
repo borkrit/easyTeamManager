@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Head, router } from '@inertiajs/react';
 import { AppLayout } from '@/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
-import { CreateTaskModal } from '@/widgets/Tasks/CreateTaskModal';
-import { TaskTable, UiTask } from '@/widgets/Tasks/TaskTable'; // Твой компонент таблицы
+import { CreateTaskModal , TaskTable,  UiTask  } from '@/widgets/index';
 
 interface User {
     id: number;
