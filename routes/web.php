@@ -32,6 +32,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
     
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
     Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
+    Route::resource('tasks', TaskController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::post('/tasks/bulk-action', [TaskController::class, 'bulkAction'])->name('tasks.bulk-action');
 
     Route::post('/tasks/{task}/comments', [CommentController::class, 'storeTaskComment'])->name('tasks.comments.store');
