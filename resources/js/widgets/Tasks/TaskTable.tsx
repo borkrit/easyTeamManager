@@ -11,9 +11,10 @@ interface TaskTableProps {
     selectedTaskIds: number[];
     toggleSelectAll: (checked: boolean) => void;
     toggleTaskSelection: (id: number) => void;
+    onEditTask: (task: UiTask) => void; 
 }
 
-export function TaskTable({ tasks, selectedTaskIds, toggleSelectAll, toggleTaskSelection }: TaskTableProps) {
+export function TaskTable({ tasks, selectedTaskIds, toggleSelectAll, toggleTaskSelection,onEditTask }: TaskTableProps) {
     
     
     const columns: Column<UiTask>[] = [
@@ -69,6 +70,18 @@ export function TaskTable({ tasks, selectedTaskIds, toggleSelectAll, toggleTaskS
                     {task.priority}
                 </span>
             ),
+        },
+        {
+            header: 'Akcje',
+            accessor: (task) => (
+                <button
+                    onClick={() => onEditTask(task)}
+                    className="text-indigo-400 hover:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-md bg-indigo-500/10 hover:bg-indigo-500/20 transition-colors"
+                >
+                    Edytuj
+                </button>
+            ),
+            className: 'text-right',
         },
     ];
 
