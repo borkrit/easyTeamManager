@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Head, router } from '@inertiajs/react';
 import { AppLayout } from '@/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
-import { CreateTaskModal , TaskTable,  UiTask  } from '@/widgets/index';
+import { CreateTaskModal , PaginationWidget, TaskTable,  UiTask  } from '@/widgets/index';
 
 interface User {
     id: number;
@@ -34,7 +34,7 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
     const [selectedTaskIds, setSelectedTaskIds] = useState<number[]>([]);
     const [bulkAction, setBulkAction] = useState<string>('');
 
-=    const toggleSelectAll = (checked: boolean) => {
+    const toggleSelectAll = (checked: boolean) => {
         if (checked) {
             setSelectedTaskIds(tasks.data.map((task) => task.id));
         } else {
@@ -122,6 +122,13 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
                 toggleTaskSelection={toggleTaskSelection}
                 onEditTask={handleOpenEditModal}
             />
+             
+        <PaginationWidget 
+          links={tasks.links} 
+          from={tasks.from} 
+          to={tasks.to} 
+          total={tasks.total} 
+      />
 
             <CreateTaskModal
                 isOpen={isTaskModalOpen}
