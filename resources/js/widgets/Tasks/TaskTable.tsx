@@ -1,4 +1,6 @@
 import { DataTable, Column } from '@/shared/ui/table';
+import { Link } from '@inertiajs/react';
+import { PaginationWidget } from '..';
 
 export type UiTask = App.Data.TaskData & {
     priority?: 'niski' | 'sredni' | 'wysoki';
@@ -6,16 +8,30 @@ export type UiTask = App.Data.TaskData & {
     assigneeName?: string | null;
 };
 
-interface TaskTableProps {
-    tasks: { data: UiTask[]; [key: string]: any }; 
+export interface BaseTaskTableProps {
+    tasks: { data: UiTask[]; [key: string]: any };
+    onEditTask?: (task: UiTask) => void;
+}
+
+interface DefaultTaskTableProps extends BaseTaskTableProps {
+    selectable?: true;
     selectedTaskIds: number[];
     toggleSelectAll: (checked: boolean) => void;
     toggleTaskSelection: (id: number) => void;
-    onEditTask: (task: UiTask) => void; 
 }
 
-export function TaskTable({ tasks, selectedTaskIds, toggleSelectAll, toggleTaskSelection,onEditTask }: TaskTableProps) {
-    
+interface DisabledSelectionTaskTableProps extends BaseTaskTableProps {
+    selectable: false;
+    selectedTaskIds?: never;
+    toggleSelectAll?: never;
+    toggleTaskSelection?: never;
+}
+
+export type TaskTableProps = DefaultTaskTableProps | DisabledSelectionTaskTableProps;
+
+export function TaskTable(props: TaskTableProps) {
+    const { tasks, onEditTask } = props;
+    const selectable = props.selectable ?? true;
     
     const columns: Column<UiTask>[] = [
         { 
@@ -71,9 +87,9 @@ export function TaskTable({ tasks, selectedTaskIds, toggleSelectAll, toggleTaskS
                 </span>
             ),
         },
-        {
+        ...(onEditTask ? [{
             header: 'Akcje',
-            accessor: (task) => (
+            accessor: (task: UiTask) => (
                 <button
                     onClick={() => onEditTask(task)}
                     className="text-indigo-400 hover:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-md bg-indigo-500/10 hover:bg-indigo-500/20 transition-colors"
@@ -82,17 +98,17 @@ export function TaskTable({ tasks, selectedTaskIds, toggleSelectAll, toggleTaskS
                 </button>
             ),
             className: 'text-right',
-        },
+        }] : []),
     ];
 
     return (
         <DataTable
             data={tasks.data}
             columns={columns}
-            selectable={true}
-            selectedIds={selectedTaskIds}
-            onSelectAll={toggleSelectAll}
-            onSelectOne={toggleTaskSelection}
+            selectable={selectable}
+            selectedIds={selectable ? props.selectedTaskIds : []}
+            onSelectAll={selectable ? props.toggleSelectAll : undefined}
+            onSelectOne={selectable ? props.toggleTaskSelection : undefined}
             emptyText="Brak zadań spełniających kryteria."
         />
     );
