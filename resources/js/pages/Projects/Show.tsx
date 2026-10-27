@@ -2,16 +2,9 @@ import React, { useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { AppLayout } from '@/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
-import { CreateProjectModal } from '@/widgets/index'; 
-interface Project {
-    id: number;
-    name: string;
-    description?: string;
-    users: { id: number; name: string }[];
-    tasks: { id: number; title: string; status: string }[];
-    comments: { id: number; body: string; user: { name: string }; created_at: string }[];
-}
+import { Comments, CreateProjectModal } from '@/widgets/index'; 
 
+type Project = App.Data.ProjectData;
 interface ShowProps {
     project: Project;
     allUsers: { id: number; name: string }[];
@@ -49,7 +42,7 @@ export default function ProjectShow({ project, allUsers }: ShowProps) {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-             
+                
                 <div className="lg:col-span-2 space-y-6">
                     <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
                         <h3 className="text-lg font-semibold text-slate-200 mb-4">Zadania w projekcie</h3>
@@ -71,9 +64,17 @@ export default function ProjectShow({ project, allUsers }: ShowProps) {
                             </div>
                         )}
                     </div>
+
+                    
+                    <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
+                        <Comments
+                            comments={project.comments || []}
+                            commentableType="project" 
+                            commentableId={project.id}
+                        />
+                    </div>
                 </div>
 
-                
                 <div className="space-y-6">
                     <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
                         <h3 className="text-lg font-semibold text-slate-200 mb-4">Zespół projektu</h3>
@@ -92,7 +93,6 @@ export default function ProjectShow({ project, allUsers }: ShowProps) {
                 </div>
             </div>
 
-            
             <CreateProjectModal
                 isOpen={isEditModalOpen}
                 onClose={() => setIsEditModalOpen(false)}

@@ -12,6 +12,8 @@ export { TeamTable } from './Team/TeamTable';
 export { CreateTeamModal } from './Team/CreateTeamModal';
 export { useTeamForm } from './Team/hooks/useTeamForm';
 
+export { Comments } from './Comments/Comments';
+
 export { ProjectTable } from './Projects/ProjectTable';
 export { CreateProjectModal } from './Projects/CreateProjectModal';
 export type { UiProject } from './Projects/ProjectTable';
