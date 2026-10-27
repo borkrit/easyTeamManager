@@ -15,18 +15,20 @@ class Task extends Model
         'title',
         'description',
         'status',
-        'user_id',
+        'priority',   
         'project_id',
+        'user_id',     
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
+
     public function comments(): MorphMany
-{
-    return $this->morphMany(Comment::class, 'commentable');
-}
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 
     public function project(): BelongsTo
     {

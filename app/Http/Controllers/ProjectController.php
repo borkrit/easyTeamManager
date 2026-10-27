@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Data\ProjectData;
 
 class ProjectController extends Controller
 {
@@ -50,14 +51,15 @@ class ProjectController extends Controller
     }
 
     
-    public function show(Project $project): Response
-    {
-        $project->load(['users:id,name,email', 'tasks.user:id,name']);
+   public function show(Project $project): Response
+{
+    $project->load(['users', 'tasks', 'comments.user']);
 
-        return Inertia::render('Projects/Show', [
-            'project' => $project,
-        ]);
-    }
+    return Inertia::render('Projects/Show', [
+        'project' => ProjectData::from($project), // или просто $project, если без DTO
+        'allUsers' => User::select('id', 'name')->get(),
+    ]);
+}
 
     
     public function update(Request $request, Project $project)

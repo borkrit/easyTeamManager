@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Data\TaskData;
+use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -101,5 +102,16 @@ public function index(Request $request): Response
         }
 
         return redirect()->back()->with('success', $message);
+    }
+
+    public function show(Task $task): Response
+    {
+        $task->load(['user', 'project', 'comments.user']);
+
+        return Inertia::render('Tasks/Show', [
+            'task' => TaskData::from($task),
+            'allProjects' => Project::select('id', 'name')->get(),
+            'allUsers' => User::select('id', 'name')->get(),
+        ]);
     }
 }

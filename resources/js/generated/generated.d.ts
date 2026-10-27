@@ -21,7 +21,7 @@ declare namespace App {
             title: string;
             description: string | null;
             status: string;
-            priority: string | null;
+            priority: unknown;
             user_id: number;
             user: App.Data.UserData | null;
             project_id: number | null;

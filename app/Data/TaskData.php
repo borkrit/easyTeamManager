@@ -15,6 +15,7 @@ class TaskData extends Data
         public string $title,
         public ?string $description,
         public string $status,
+        /** @var 'niski'|'sredni'|'wysoki' */
         public ?string $priority,
         public int $user_id,
         public ?UserData $user,
