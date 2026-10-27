@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Head, router } from '@inertiajs/react';
 import { AppLayout } from '@/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
-import { CreateTaskModal , PaginationWidget, TaskTable,  UiTask  } from '@/widgets/index';
+import { CreateTaskModal , PageHeader, PaginationWidget, TaskTable,  UiTask  } from '@/widgets/index';
 
 interface User {
     id: number;
@@ -78,17 +78,12 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
         <AppLayout title="Zadania">
             <Head title="Zadania" />
 
-            <div className="flex items-center justify-between mb-6">
-                <div>
-                    <h2 className="text-2xl font-bold text-slate-100">Lista zadań</h2>
-                    <p className="text-sm text-slate-400 mt-1">
-                        Zarządzaj zadaniami we wszystkich projektach.
-                    </p>
-                </div>
-                <Button variant="primary" size="md" onClick={() => setIsTaskModalOpen(true)}>
-                    + Utwórz zadanie
-                </Button>
-            </div>
+            <PageHeader
+                title="Lista zadań"
+                description="Zarządzaj zadaniami we wszystkich projektach."
+                actionLabel="+ Utwórz zadanie"
+                onActionClick={handleOpenCreateModal}
+            />
 
             
             {selectedTaskIds.length > 0 && (
