@@ -1,10 +1,6 @@
 import { DataTable, Column } from '@/shared/ui/table';
 
-export type TeamMember = App.Data.UserData & {
-    tasks_count?: number;
-    projects_count?: number;
-    role?: string;
-};
+export type TeamMember = App.Data.UserData
 
 interface TeamTableProps {
     users: TeamMember[];

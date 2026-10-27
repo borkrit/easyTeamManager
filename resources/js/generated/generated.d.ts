@@ -21,9 +21,12 @@ declare namespace App {
             title: string;
             description: string | null;
             status: string;
+            priority: string | null;
             user_id: number;
             user: App.Data.UserData | null;
             project_id: number | null;
+            projectName: string | null;
+            assigneeName: string | null;
             comments: App.Data.CommentData[] | undefined;
             created_at: undefined | null;
         };
