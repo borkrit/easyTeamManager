@@ -1,87 +1,22 @@
-import React, { useEffect } from 'react';
-import { useForm } from '@inertiajs/react';
+import React from 'react';
 import { Button } from '@/shared/ui/button';
-import { UiTask } from '@/widgets/Tasks/TaskTable';
+import { useCreateTaskModal, CreateTaskModalProps } from './hooks/useCreateTaskModal';
 
-interface User {
-    id: number;
-    name: string;
-}
+export function CreateTaskModal(props: CreateTaskModalProps) {
+    const { isOpen, onClose, projectId, projects = [] } = props;
 
-interface Project {
-    id: number;
-    name: string;
-    users?: User[];
-}
-
-interface CreateTaskModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    projectId?: number;
-    users: User[];
-    projects?: Project[];
-    task?: UiTask | null; 
-}
-
-export function CreateTaskModal({ isOpen, onClose, projectId, users = [], projects = [], task = null }: CreateTaskModalProps) {
-    const isEditing = !!task;
-
-    const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm({
-        project_id: task?.project_id || projectId || (projects[0]?.id ?? ''),
-        title: task?.title || '',
-        description: task?.description || '',
-        user_id: task?.user_id || ('' as number | ''),
-        status: task?.status || 'do_zrobienia',
-        priority: task?.priority || 'sredni',
-    });
-
-    useEffect(() => {
-        if (isOpen) {
-            if (task) {
-                setData({
-                    project_id: task.project_id || '',
-                    title: task.title,
-                    description: task.description || '',
-                    user_id: task.user_id || '',
-                    status: task.status,
-                    priority: task.priority || 'sredni',
-                });
-            } else {
-                setData('project_id', projectId || (projects[0]?.id ?? ''));
-                reset('title', 'description', 'user_id', 'status', 'priority');
-            }
-            clearErrors();
-        }
-    }, [isOpen, task, projectId]);
+    const {
+        isEditing,
+        data,
+        setData,
+        processing,
+        errors,
+        availableUsers,
+        hasNoUsers,
+        handleSubmit,
+    } = useCreateTaskModal(props);
 
     if (!isOpen) return null;
-
-    const currentProject = projects.find((p) => p.id === Number(data.project_id));
-    const availableUsers = projects.length > 0 
-        ? (currentProject?.users || []) 
-        : users;
-
-    const hasNoUsers = availableUsers.length === 0;
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (isEditing && task) {
-            put(`/tasks/${task.id}`, {
-                onSuccess: () => {
-                    reset();
-                    onClose();
-                },
-            });
-        } else {
-            post('/tasks', {
-                onSuccess: () => {
-                    reset();
-                    onClose();
-                },
-            });
-        }
-    };
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
@@ -103,13 +38,13 @@ export function CreateTaskModal({ isOpen, onClose, projectId, users = [], projec
                             </label>
                             <select
                                 value={data.project_id}
-                                onChange={(e) => {
+                                onChange={(e) =>
                                     setData({
                                         ...data,
                                         project_id: Number(e.target.value),
                                         user_id: '',
-                                    });
-                                }}
+                                    })
+                                }
                                 className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500"
                             >
                                 <option value="">Wybierz projekt</option>
@@ -215,7 +150,7 @@ export function CreateTaskModal({ isOpen, onClose, projectId, users = [], projec
                             Anuluj
                         </Button>
                         <Button type="submit" variant="primary" size="md" disabled={processing || hasNoUsers}>
-                            {processing ? 'Zapisywanie...' : (isEditing ? 'Zapisz zmiany' : 'Utwórz zadanie')}
+                            {processing ? 'Zapisywanie...' : isEditing ? 'Zapisz zmiany' : 'Utwórz zadanie'}
                         </Button>
                     </div>
                 </form>
