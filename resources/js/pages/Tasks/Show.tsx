@@ -4,6 +4,7 @@ import { AppLayout } from '@/layouts/AppLayout';
 import { Comments, CreateTaskModal } from '@/widgets/index'; 
 import { Badge, BadgeVariant } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button'; 
+import { BackButton } from '@/shared/ui/backButton';
 
 interface TaskShowProps {
     task: App.Data.TaskData;
@@ -18,17 +19,8 @@ export default function TaskShow({ task, allProjects = [], allUsers = [] }: Task
         <AppLayout title={task.title}>
             <Head title={task.title} />
 
-            <div className="mb-6">
-                <Link
-                    href="/tasks"
-                    className="inline-flex items-center gap-2 text-xs text-slate-400 hover:text-slate-100 transition-colors"
-                >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                    Wróć do listy zadań
-                </Link>
-            </div>
+           
+            <BackButton href={'/tasks'}> Wróć do listy zadań </BackButton>
 
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div>

@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/react';
 import { AppLayout } from '@/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
 import { Comments, CreateProjectModal } from '@/widgets/index'; 
+import { BackButton } from '@/shared/ui/backButton';
 
 type Project = App.Data.ProjectData;
 interface ShowProps {
@@ -17,17 +18,8 @@ export default function ProjectShow({ project, allUsers }: ShowProps) {
         <AppLayout title={project.name}>
             <Head title={project.name} />
 
-            <div className="mb-4">
-                <Link
-                    href="/projects"
-                    className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-slate-100 transition-colors"
-                >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                    Wróć do listy projektów
-                </Link>
-            </div>
+            
+            <BackButton href={'/projects'}> Wróć do listy projektów </BackButton>
 
             <div className="flex items-center justify-between mb-6">
                 <div>

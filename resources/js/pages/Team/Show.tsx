@@ -2,6 +2,7 @@ import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { Badge } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
+import { BackButton } from '@/shared/ui/backButton';
 
 interface Task {
   id: number;
@@ -47,13 +48,9 @@ export default function TeamShow({ member }: TeamShowProps) {
       <Head title={`Profil: ${member.name} - EasyRIPOK`} />
 
       
-      <div className="mb-6">
-        <Link href="/team">
-          <Button variant="primary" size="sm">
-            ← Powrót do zespołu
-          </Button>
-        </Link>
-      </div>
+      
+        <BackButton href={'/team'}> Wróć do listy zespołu </BackButton>
+      
 
       
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
