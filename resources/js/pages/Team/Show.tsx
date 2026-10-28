@@ -1,6 +1,6 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
-import { Badge } from '@/shared/ui/badge';
+import { Badge, BadgeVariant } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import { BackButton } from '@/shared/ui/backButton';
 
@@ -36,23 +36,19 @@ interface TeamShowProps {
   member: MemberDetail;
 }
 
-const statusBadges: Record<string, { label: string; variant: 'default' | 'warning' | 'success' }> = {
-  do_zrobienia: { label: 'Do zrobienia', variant: 'default' },
-  w_trakcie: { label: 'W trakcie', variant: 'warning' },
-  zakonczone: { label: 'Zakończone', variant: 'success' },
+const statusBadges: Record<string, { label: string; variant: BadgeVariant }> = {
+  do_zrobienia: { label: 'Do zrobienia', variant: 'do_zrobienia' },
+  w_trakcie: { label: 'W trakcie', variant: 'w_trakcie' },
+  zakonczone: { label: 'Zakończone', variant: 'zakonczone' },
 };
 
 export default function TeamShow({ member }: TeamShowProps) {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 p-6 md:p-10">
-      <Head title={`Profil: ${member.name} - EasyRIPOK`} />
+      <Head title={`Profil: ${member.name}`} />
 
-      
-      
-        <BackButton href={'/team'}> Wróć do listy zespołu </BackButton>
-      
+      <BackButton href={'/team'}> Wróć do listy zespołu </BackButton>
 
-      
       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <div className="h-16 w-16 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold text-2xl uppercase">
@@ -67,7 +63,7 @@ export default function TeamShow({ member }: TeamShowProps) {
         <div className="flex items-center gap-3">
           <div className="text-right">
             <span className="text-xs text-slate-500 block">Rola w zespole</span>
-            <Badge variant="purple" size="md" >
+            <Badge variant="default" size="md">
               {member.role.toUpperCase()}
             </Badge>
           </div>
@@ -75,7 +71,6 @@ export default function TeamShow({ member }: TeamShowProps) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-slate-100">
@@ -111,7 +106,6 @@ export default function TeamShow({ member }: TeamShowProps) {
           )}
         </div>
 
-        
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-slate-100">

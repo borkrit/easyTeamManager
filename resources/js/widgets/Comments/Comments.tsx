@@ -32,8 +32,9 @@ export function Comments({ comments, commentableType, commentableId }: CommentsP
                         <div key={comment.id} className="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs">
                             <div className="flex justify-between items-center mb-1">
                                 <span className="font-semibold text-indigo-400">{comment.user?.name ?? 'Użytkownik'}</span>
-                                <span className="text-slate-500">{new Date(comment.created_at).toLocaleString('pl-PL')}</span>
-                            </div>
+                                <span className="text-slate-500 text-xs">
+                                    {comment.created_at ? new Date(comment.created_at).toLocaleString('pl-PL') : ''}
+                                </span>                            </div>
                             <p className="text-slate-300">{comment.body}</p>
                         </div>
                     ))

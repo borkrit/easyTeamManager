@@ -38,7 +38,7 @@ export default function ProjectShow({ project, allUsers }: ShowProps) {
                 <div className="lg:col-span-2 space-y-6">
                     <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
                         <h3 className="text-lg font-semibold text-slate-200 mb-4">Zadania w projekcie</h3>
-                        {project.tasks.length === 0 ? (
+                        {(!project.tasks || project.tasks.length === 0) ? (
                             <p className="text-sm text-slate-500">Brak przypisanych zadań.</p>
                         ) : (
                             <div className="space-y-2">
@@ -70,7 +70,7 @@ export default function ProjectShow({ project, allUsers }: ShowProps) {
                 <div className="space-y-6">
                     <div className="bg-slate-900 border border-slate-800 rounded-xl p-5">
                         <h3 className="text-lg font-semibold text-slate-200 mb-4">Zespół projektu</h3>
-                        {project.users.length === 0 ? (
+                        {(!project.users || project.users.length === 0) ? (
                             <p className="text-sm text-slate-500">Brak członków w zespole.</p>
                         ) : (
                             <div className="space-y-2">

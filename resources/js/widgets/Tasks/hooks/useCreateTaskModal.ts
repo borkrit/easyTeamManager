@@ -22,6 +22,15 @@ export interface CreateTaskModalProps {
     task?: UiTask | null;
 }
 
+interface TaskFormValues {
+    project_id: number | '';
+    title: string;
+    description: string;
+    user_id: number | '';
+    status: string;
+    priority: 'niski' | 'sredni' | 'wysoki';
+}
+
 export function useCreateTaskModal({
     isOpen,
     onClose,
@@ -32,13 +41,13 @@ export function useCreateTaskModal({
 }: CreateTaskModalProps) {
     const isEditing = !!task;
 
-    const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm({
+    const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm<TaskFormValues>({
         project_id: task?.project_id || projectId || (projects[0]?.id ?? ''),
         title: task?.title || '',
         description: task?.description || '',
-        user_id: task?.user_id || ('' as number | ''),
+        user_id: task?.user_id || '',
         status: task?.status || 'do_zrobienia',
-        priority: task?.priority || 'sredni',
+        priority: (task?.priority as 'niski' | 'sredni' | 'wysoki') || 'sredni',
     });
 
     useEffect(() => {
@@ -50,7 +59,7 @@ export function useCreateTaskModal({
                     description: task.description || '',
                     user_id: task.user_id || '',
                     status: task.status,
-                    priority: task.priority || 'sredni',
+                    priority: (task.priority as 'niski' | 'sredni' | 'wysoki') || 'sredni',
                 });
             } else {
                 setData('project_id', projectId || (projects[0]?.id ?? ''));
@@ -88,7 +97,6 @@ export function useCreateTaskModal({
         isEditing,
         data,
         setData,
-        processing,
         errors,
         availableUsers,
         hasNoUsers,

@@ -2,11 +2,7 @@ import { DataTable, Column } from '@/shared/ui/table';
 import { Link } from '@inertiajs/react';
 import { PaginationWidget } from '..';
 
-export type UiTask = App.Data.TaskData & {
-    priority?: 'niski' | 'sredni' | 'wysoki';
-    projectName?: string;
-    assigneeName?: string | null;
-};
+export type UiTask = App.Data.TaskData
 
 export interface BaseTaskTableProps {
     tasks: { data: UiTask[]; [key: string]: any };
@@ -36,7 +32,12 @@ export function TaskTable(props: TaskTableProps) {
     const columns: Column<UiTask>[] = [
         { 
             header: 'Tytuł zadania', 
-            accessor: 'title', 
+            accessor: (task)=>( <Link
+                    href={`/tasks/${task.id}`}
+                    className="font-medium text-slate-100 hover:text-indigo-400 transition-colors"
+                >
+                    {task.title}
+                </Link>), 
             className: 'font-medium text-slate-200' 
         },
         { 
@@ -83,7 +84,7 @@ export function TaskTable(props: TaskTableProps) {
                             : 'text-slate-400'
                     }`}
                 >
-                    {task.priority}
+                    {task.priority ? String(task.priority) : '—'}
                 </span>
             ),
         },

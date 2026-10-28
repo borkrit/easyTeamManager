@@ -78,7 +78,7 @@ export default function TaskShow({ task, allProjects = [], allUsers = [] }: Task
                                 <span>
                                     {task.priority ? (
                                         <Badge variant={(task.priority as BadgeVariant) || 'sredni'} size="sm">
-                                            {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                                            {(task.priority as string).charAt(0).toUpperCase() + (task.priority as string).slice(1)}
                                         </Badge>
                                     ) : (
                                         <span className="text-slate-500">Brak</span>
