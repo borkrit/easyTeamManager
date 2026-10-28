@@ -97,6 +97,7 @@ export function useCreateTaskModal({
         isEditing,
         data,
         setData,
+        processing,
         errors,
         availableUsers,
         hasNoUsers,
