@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/team', [TeamController::class, 'index'])->name('team.index');
     Route::post('/team', [TeamController::class, 'store'])->name('team.store');
     Route::get('/team/{user}', [TeamController::class, 'show'])->name('team.show');
+Route::delete('/team/{user}', [TeamController::class, 'destroy'])->name('team.destroy');
 
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
 
@@ -33,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
     Route::resource('projects', ProjectController::class);
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
     
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
     Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');

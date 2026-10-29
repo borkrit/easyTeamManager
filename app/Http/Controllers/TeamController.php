@@ -65,11 +65,14 @@ class TeamController extends Controller
         ]);
     }
 
-    public function destroy(User $user)
-{
-    // $user->tasks()->update(['user_id' => null]); // Если нужно освободить задачи
-    $user->delete();
+   public function destroy(User $user)
+    {
+        if (auth()->id() === $user->id) {
+            return back()->with('error', 'Nie możesz usunąć własnego konta.');
+        }
 
-    return redirect()->route('team.index')->with('success', 'Użytkownik został usunięty z zespołu.');
-}
+        $user->delete();
+
+        return redirect()->route('team.index')->with('success', 'Użytkownik został pomyślnie usunięty.');
+    }
 }
