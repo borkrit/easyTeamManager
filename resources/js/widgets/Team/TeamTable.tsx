@@ -1,4 +1,6 @@
+import { useDeleteResource } from '@/shared/hooks/useDeleteResource';
 import { DataTable, Column } from '@/shared/ui/table';
+import { Link } from '@inertiajs/react';
 
 export type TeamMember = App.Data.UserData
 
@@ -15,6 +17,8 @@ export function TeamTable({
     onSelectAll, 
     onSelectOne 
 }: TeamTableProps) {
+
+    const { deleteItem: deleteUser } = useDeleteResource('team');  
     
     const columns: Column<TeamMember>[] = [
         { 
@@ -64,17 +68,34 @@ export function TeamTable({
                     {user.created_at ? new Date(user.created_at).toLocaleDateString('pl-PL') : '—'}
                 </span>
             )
-        }
+        },
+        {
+                    header: 'Akcje',
+                    accessor: (team: TeamMember) => (
+                        <div className="flex items-center justify-end gap-2">
+                            <Link
+                                href={`/team/${team.id}`}
+                                className="text-indigo-400 hover:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-md bg-indigo-500/10 hover:bg-indigo-500/20 transition-colors"
+                            >
+                                Szczegóły
+                            </Link>
+                            <button
+                                onClick={() => deleteUser(team.id, team.name)}
+                                className="text-red-400 hover:text-red-300 text-xs font-medium px-2.5 py-1 rounded-md bg-red-500/10 hover:bg-red-500/20 transition-colors"
+                            >
+                                Usuń
+                            </button>
+                        </div>
+                    ),
+                    className: 'text-right',
+                },
     ];
 
     return (
         <DataTable
             data={users}
             columns={columns}
-            // selectable={true}
-            // selectedIds={selectedUserIds}
-            // onSelectAll={onSelectAll}
-            // onSelectOne={onSelectOne}
+        
             emptyText="Brak członków zespołu w bazie."
         />
     );

@@ -1,3 +1,4 @@
+import { useDeleteResource } from '@/shared/hooks/useDeleteResource';
 import { DataTable, Column } from '@/shared/ui/table';
 import { Link } from '@inertiajs/react';
 
@@ -23,6 +24,7 @@ export function ProjectTable({
     onSelectAll, 
     onSelectOne 
 }: ProjectTableProps) {
+    const { deleteItem: deleteProject } = useDeleteResource('projects');    
     const columns: Column<UiProject>[] = [
         { 
             header: 'Nazwa projektu', 
@@ -77,7 +79,28 @@ export function ProjectTable({
                 </span>
             ),
             className: 'w-36'
-        }
+        },
+        {
+            header: 'Akcje',
+            accessor: (project: UiProject) => (
+                <div className="flex items-center justify-end gap-2">
+                    <Link
+                        href={`/projects/${project.id}`}
+                        className="text-indigo-400 hover:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-md bg-indigo-500/10 hover:bg-indigo-500/20 transition-colors"
+                    >
+                        Szczegóły
+                    </Link>
+                    <button
+                        onClick={() => deleteProject(project.id, project.name)}
+                        className="text-red-400 hover:text-red-300 text-xs font-medium px-2.5 py-1 rounded-md bg-red-500/10 hover:bg-red-500/20 transition-colors"
+                    >
+                        Usuń
+                    </button>
+                </div>
+            ),
+            className: 'text-right',
+        },
+        
     ];
 
     return (

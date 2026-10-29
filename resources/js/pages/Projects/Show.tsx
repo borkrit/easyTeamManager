@@ -4,6 +4,7 @@ import { AppLayout } from '@/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
 import { Comments, CreateProjectModal } from '@/widgets/index'; 
 import { BackButton } from '@/shared/ui/backButton';
+import { useDeleteResource } from '@/shared/hooks/useDeleteResource';
 
 type Project = App.Data.ProjectData;
 interface ShowProps {
@@ -13,6 +14,8 @@ interface ShowProps {
 
 export default function ProjectShow({ project, allUsers }: ShowProps) {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    
+    const { deleteItem: deleteProject } = useDeleteResource('projects');
 
     return (
         <AppLayout title={project.name}>
@@ -28,9 +31,19 @@ export default function ProjectShow({ project, allUsers }: ShowProps) {
                         {project.description || 'Brak opisu projektu.'}
                     </p>
                 </div>
-                <Button variant="secondary" size="md" onClick={() => setIsEditModalOpen(true)}>
-                    Edytuj projekt
-                </Button>
+                
+                <div className="flex items-center gap-3">
+                    <Button variant="secondary" size="md" onClick={() => setIsEditModalOpen(true)}>
+                        Edytuj projekt
+                    </Button>
+                    <Button 
+                        variant="danger" 
+                        size="md" 
+                        onClick={() => deleteProject(project.id, project.name)}
+                    >
+                        Usuń projekt
+                    </Button>
+                </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
