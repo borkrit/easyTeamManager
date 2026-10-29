@@ -14,30 +14,48 @@ class TaskController extends Controller
 {
    
 public function index(Request $request): Response
-    {
-        $query = Task::with(['user', 'project', 'comments.user']);
-        if ($request->filled('status')) {
-            $query->where('status', $request->string('status'));
-        }
+{
+    $query = Task::with(['user', 'project', 'comments.user']);
 
-        if ($request->filled('project_id')) {
-            $query->where('project_id', $request->integer('project_id'));
-        }
-
-        $tasks = $query->latest()->paginate(10)->withQueryString();
-        
-        $tasks->getCollection()->transform(fn ($task) => TaskData::from($task));
-
-        $users = User::select('id', 'name')->get();
-        $projects = \App\Models\Project::with('users:id,name')->select('id', 'name')->get();
-
-        return Inertia::render('Tasks/Index', [
-            'tasks' => $tasks,
-            'users' => $users,
-            'projects' => $projects,
-            'filters' => $request->only(['status', 'project_id']),
-        ]);
+    if ($request->filled('search')) {
+        $search = $request->string('search');
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
     }
+
+    if ($request->filled('status')) {
+        $query->where('status', $request->string('status'));
+    }
+
+    if ($request->filled('priority')) {
+        $query->where('priority', $request->string('priority'));
+    }
+
+    if ($request->filled('user_id')) {
+        $query->where('user_id', $request->integer('user_id'));
+    }
+
+    
+    if ($request->filled('project_id')) {
+        $query->where('project_id', $request->integer('project_id'));
+    }
+
+    $tasks = $query->latest()->paginate(10)->withQueryString();
+    
+    $tasks->getCollection()->transform(fn ($task) => TaskData::from($task));
+
+    $users = User::select('id', 'name')->get();
+    $projects = Project::with('users:id,name')->select('id', 'name')->get();
+
+    return Inertia::render('Tasks/Index', [
+        'tasks' => $tasks,
+        'users' => $users,
+        'projects' => $projects,
+        'filters' => $request->only(['search', 'status', 'priority', 'user_id', 'project_id']),
+    ]);
+}
 
     
     public function store(Request $request)
