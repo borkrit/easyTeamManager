@@ -84,4 +84,10 @@ class ProjectController extends Controller
 
         return redirect()->back()->with('success', 'Projekt został pomyślnie zaktualizowany!');
     }
+
+    public function destroy(Project $project)
+    {
+
+        return redirect()->route('projects.index')->with('success', 'Projekt został pomyślnie usunięty.');
+    }
 }
