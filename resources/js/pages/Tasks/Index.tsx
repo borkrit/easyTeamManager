@@ -3,6 +3,7 @@ import { Head, router } from '@inertiajs/react';
 import { AppLayout } from '@/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
 import { CreateTaskModal , PageHeader, PaginationWidget, TaskTable,  UiTask  } from '@/widgets/index';
+import { TaskFilters } from '@/widgets/index';
 
 interface User {
     id: number;
@@ -109,6 +110,12 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
                     </form>
                 </div>
             )}
+
+            <TaskFilters 
+                    filters={filters} 
+                    users={users} 
+                    projects={projects} 
+                />
 
            <TaskTable
                 tasks={tasks}

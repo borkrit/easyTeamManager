@@ -14,6 +14,8 @@ export { useTeamForm } from './Team/hooks/useTeamForm';
 
 export { Comments } from './Comments/Comments';
 
+export { TaskFilters } from './TaskFilters/TaskFilters';
+
 export { ProjectTable } from './Projects/ProjectTable';
 export { CreateProjectModal } from './Projects/CreateProjectModal';
 export type { UiProject } from './Projects/ProjectTable';
