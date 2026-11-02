@@ -1,8 +1,7 @@
-import React from 'react';
-import { useForm } from '@inertiajs/react';
 import { Button } from '@/shared/ui/button';
+import { useComments } from './hook/useComments';
 
-type Comment = App.Data.CommentData
+type Comment = App.Data.CommentData;
 
 interface CommentsProps {
     comments: Comment[];
@@ -11,16 +10,10 @@ interface CommentsProps {
 }
 
 export function Comments({ comments, commentableType, commentableId }: CommentsProps) {
-    const { data, setData, post, processing, reset, errors } = useForm({
-        body: '',
+    const { data, setData, handleSubmit, processing, errors } = useComments({
+        commentableType,
+        commentableId,
     });
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        post(`/${commentableType}s/${commentableId}/comments`, {
-            onSuccess: () => reset('body'),
-        });
-    };
 
     return (
         <div className="space-y-4 pt-4 border-t border-slate-800">
@@ -28,13 +21,14 @@ export function Comments({ comments, commentableType, commentableId }: CommentsP
 
             <div className="space-y-3 max-h-48 overflow-y-auto pr-1">
                 {comments && comments.length > 0 ? (
-                    comments?.map((comment) => (
+                    comments.map((comment) => (
                         <div key={comment.id} className="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs">
                             <div className="flex justify-between items-center mb-1">
                                 <span className="font-semibold text-indigo-400">{comment.user?.name ?? 'Użytkownik'}</span>
                                 <span className="text-slate-500 text-xs">
                                     {comment.created_at ? new Date(comment.created_at).toLocaleString('pl-PL') : ''}
-                                </span>                            </div>
+                                </span>
+                            </div>
                             <p className="text-slate-300">{comment.body}</p>
                         </div>
                     ))

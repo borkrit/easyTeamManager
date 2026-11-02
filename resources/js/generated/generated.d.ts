@@ -5,7 +5,7 @@ declare namespace App {
             body: string;
             user_id: number;
             user: App.Data.UserData | null;
-            created_at: undefined | null;
+            created_at: string | null;
         };
         export type ProjectData = {
             id: number;
