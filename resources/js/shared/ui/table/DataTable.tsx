@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { cva, type VariantProps } from 'class-variance-authority';
 
 export interface Column<T> {
     header: string;
@@ -7,7 +7,20 @@ export interface Column<T> {
     className?: string;
 }
 
-export interface DataTableProps<T> {
+const dataTableVariants = cva('w-full text-left border-collapse', {
+    variants: {
+        density: {
+            sm: '[&_th]:py-2 [&_td]:py-2',
+            md: '[&_th]:py-3.5 [&_td]:py-3.5',
+            lg: '[&_th]:py-5 [&_td]:py-5',
+        },
+    },
+    defaultVariants: {
+        density: 'md',
+    },
+});
+
+export interface DataTableProps<T> extends VariantProps<typeof dataTableVariants> {
     data: T[];
     columns: Column<T>[];
     selectable?: boolean;
@@ -16,6 +29,7 @@ export interface DataTableProps<T> {
     onSelectOne?: (id: number) => void;
     rowKey?: keyof T;
     emptyText?: string;
+    className?: string;
 }
 
 export function DataTable<T>({
@@ -27,16 +41,18 @@ export function DataTable<T>({
     onSelectOne,
     rowKey = 'id' as keyof T,
     emptyText = 'Brak danych do wyświetlenia.',
+    density,
+    className = '',
 }: DataTableProps<T>) {
     const isAllSelected = data.length > 0 && data.every((item) => selectedIds.includes(Number(item[rowKey])));
 
     return (
         <div className="overflow-x-auto bg-slate-900 rounded-xl border border-slate-800 shadow-sm">
-            <table className="w-full text-left border-collapse">
+            <table className={dataTableVariants({ density, className })}>
                 <thead>
                     <tr className="border-b border-slate-800 text-xs font-semibold text-slate-400 uppercase tracking-wider bg-slate-950/40">
                         {selectable && (
-                            <th className="py-3.5 px-4 w-12 text-center">
+                            <th className="px-4 w-12 text-center">
                                 <input
                                     type="checkbox"
                                     checked={isAllSelected}
@@ -46,7 +62,7 @@ export function DataTable<T>({
                             </th>
                         )}
                         {columns.map((col, idx) => (
-                            <th key={idx} className={`py-3.5 px-4 ${col.className ?? ''}`}>
+                            <th key={idx} className={`px-4 ${col.className ?? ''}`}>
                                 {col.header}
                             </th>
                         ))}
@@ -66,7 +82,7 @@ export function DataTable<T>({
                                     }`}
                                 >
                                     {selectable && (
-                                        <td className="py-3.5 px-4 text-center">
+                                        <td className="px-4 text-center">
                                             <input
                                                 type="checkbox"
                                                 checked={isSelected}
@@ -76,7 +92,7 @@ export function DataTable<T>({
                                         </td>
                                     )}
                                     {columns.map((col, colIdx) => (
-                                        <td key={colIdx} className={`py-3.5 px-4 ${col.className ?? ''}`}>
+                                        <td key={colIdx} className={`px-4 ${col.className ?? ''}`}>
                                             {typeof col.accessor === 'function'
                                                 ? col.accessor(item)
                                                 : String(item[col.accessor] ?? '')}

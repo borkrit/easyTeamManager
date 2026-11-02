@@ -1,4 +1,5 @@
-
+import React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { Button } from '../button';
 
 interface FilterOption {
@@ -14,16 +15,33 @@ interface FilterField {
     placeholder?: string;
 }
 
-interface TableFiltersUIProps {
+const tableFiltersVariants = cva(
+    'bg-slate-900 border border-slate-800 rounded-xl shadow-sm flex flex-wrap items-center gap-4',
+    {
+        variants: {
+            padding: {
+                sm: 'p-3 mb-4',
+                md: 'p-4 mb-6',
+                lg: 'p-6 mb-8',
+            },
+        },
+        defaultVariants: {
+            padding: 'md',
+        },
+    }
+);
+
+interface TableFiltersUIProps extends VariantProps<typeof tableFiltersVariants> {
     fields: FilterField[];
     values: Record<string, any>;
     onChange: (name: string, value: any) => void;
     onReset: () => void;
+    className?: string;
 }
 
-export function TableFilters({ fields, values, onChange, onReset }: TableFiltersUIProps) {
+export function TableFilters({ fields, values, onChange, onReset, padding, className = '' }: TableFiltersUIProps) {
     return (
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 mb-6 shadow-sm flex flex-wrap items-center gap-4">
+        <div className={tableFiltersVariants({ padding, className })}>
             {fields.map((field) => (
                 <div key={field.name} className="flex flex-col gap-1.5 flex-1 min-w-[200px]">
                     <label className="text-xs font-medium text-slate-400">{field.label}</label>
