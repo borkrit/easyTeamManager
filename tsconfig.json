@@ -18,6 +18,10 @@
     "paths": {
       "@/*": ["./resources/js/*"]
     },
+    "types": [
+      "vitest/globals",
+      "@testing-library/jest-dom"
+    ]
     
   },
   
