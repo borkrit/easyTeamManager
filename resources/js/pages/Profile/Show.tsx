@@ -1,7 +1,8 @@
 import React from 'react';
 import { Head, usePage } from '@inertiajs/react';
 import { TaskTable, PaginationWidget,UiTask } from '@/widgets'; 
-import { AppLayout } from '@/layouts/AppLayout';
+import { AppLayout } from '@/app/layouts/AppLayout';
+import { Pagination } from '@/shared/ui/pagination';
 
 
 interface User {
@@ -74,7 +75,6 @@ export default function ProfileShow() {
                     </div>
                 </div>
 
-                {/* Секция задач с пагинацией */}
                 <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
                     <div className="flex items-center justify-between mb-6">
                         <div>
@@ -89,12 +89,17 @@ export default function ProfileShow() {
                     <TaskTable tasks={tasks ?? { data: [] }} selectable={false} />
 
                     {tasks && (
-                        <PaginationWidget 
-                            links={tasks.links} 
+                        // <PaginationWidget 
+                        //     links={tasks.links} 
+                        //     from={tasks.from} 
+                        //     to={tasks.to} 
+                        //     total={tasks.total} 
+                        // />
+                        <Pagination 
+                        links={tasks.links} 
                             from={tasks.from} 
                             to={tasks.to} 
-                            total={tasks.total} 
-                        />
+                            total={tasks.total}   />
                     )}
                 </div>
             </div>

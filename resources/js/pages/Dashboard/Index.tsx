@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppLayout } from '@/layouts/AppLayout';
+import { AppLayout } from '@/app/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
 import { Head, Link } from '@inertiajs/react';
 import { StatCard } from './components/StatCard';
@@ -28,7 +28,7 @@ interface DashboardProps {
 
 export default function DashboardIndex({ stats, recentTasks }: DashboardProps) {
   return (
-    <AppLayout title="Pulpit główny">
+    <>
       <Head title="Pulpit" />
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
@@ -119,6 +119,6 @@ export default function DashboardIndex({ stats, recentTasks }: DashboardProps) {
           </div>
         </div>
       </div>
-    </AppLayout>
+    </>
   );
 }

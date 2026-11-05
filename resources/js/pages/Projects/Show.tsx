@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
-import { AppLayout } from '@/layouts/AppLayout';
+import  { useState } from 'react';
+import { Head } from '@inertiajs/react';
 import { Button } from '@/shared/ui/button';
 import { Comments, CreateProjectModal } from '@/widgets/index'; 
 import { BackButton } from '@/shared/ui/backButton';
@@ -18,7 +17,7 @@ export default function ProjectShow({ project, allUsers }: ShowProps) {
     const { deleteItem: deleteProject } = useDeleteResource('projects');
 
     return (
-        <AppLayout title={project.name}>
+        <>
             <Head title={project.name} />
 
             
@@ -104,6 +103,6 @@ export default function ProjectShow({ project, allUsers }: ShowProps) {
                 users={allUsers}
                 initialData={project}
             />
-        </AppLayout>
+        </>
     );
 }

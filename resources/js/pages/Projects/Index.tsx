@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { Head } from '@inertiajs/react';
-import { AppLayout } from '@/layouts/AppLayout';
-import { Button } from '@/shared/ui/button';
 import { ProjectTable, UiProject, CreateProjectModal, PageHeader } from '@/widgets/index';
 
 interface ProjectsIndexProps {
@@ -28,7 +26,7 @@ export default function ProjectsIndex({ projects, users = [] }: ProjectsIndexPro
     };
 
     return (
-        <AppLayout title="Projekty">
+        <>
             <Head title="Projekty" />
 
 
@@ -53,6 +51,6 @@ export default function ProjectsIndex({ projects, users = [] }: ProjectsIndexPro
                 onClose={() => setIsModalOpen(false)}
                 users={users}
             />
-        </AppLayout>
+        </>
     );
 }

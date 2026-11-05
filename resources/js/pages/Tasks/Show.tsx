@@ -1,6 +1,5 @@
-import React, { useState } from 'react'; 
-import { Head, Link } from '@inertiajs/react';
-import { AppLayout } from '@/layouts/AppLayout';
+import { useState } from 'react'; 
+import { Head } from '@inertiajs/react';
 import { Comments, CreateTaskModal } from '@/widgets/index'; 
 import { Badge, BadgeVariant } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button'; 
@@ -16,7 +15,7 @@ export default function TaskShow({ task, allProjects = [], allUsers = [] }: Task
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     return (
-        <AppLayout title={task.title}>
+        <>
             <Head title={task.title} />
 
            
@@ -119,6 +118,6 @@ export default function TaskShow({ task, allProjects = [], allUsers = [] }: Task
                 users={allUsers}
                 task={task}
             />
-        </AppLayout>
+        </>
     );
 }

@@ -7,7 +7,7 @@ interface AppLayoutProps {
   title?: string;
 }
 
-export const AppLayout: React.FC<AppLayoutProps> = ({ children, title = 'Panel Zarządzania' }) => {
+export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const { props } = usePage<{ auth?: { user?: { name: string; email: string } } }>();
   const user = props.auth?.user;
 
@@ -16,8 +16,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children, title = 'Panel Z
       <Sidebar />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <Header 
-          title={title} 
+        <Header  
           userName={user?.name ?? 'Administrator'} 
           userEmail={user?.email ?? 'admin@easyripok.pl'} 
         />

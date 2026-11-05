@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Head, router } from '@inertiajs/react';
-import { AppLayout } from '@/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
-import { CreateTaskModal , PageHeader, PaginationWidget, TaskTable,  UiTask  } from '@/widgets/index';
+import { CreateTaskModal , PageHeader,  TaskTable,  UiTask  } from '@/widgets/index';
 import { TaskFilters } from '@/widgets/index';
+import { Pagination } from '@/shared/ui/pagination';
 
 interface User {
     id: number;
@@ -76,7 +76,7 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
     };
 
     return (
-        <AppLayout title="Zadania">
+        <>
             <Head title="Zadania" />
 
             <PageHeader
@@ -125,7 +125,7 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
                 onEditTask={handleOpenEditModal}
             />
              
-        <PaginationWidget 
+        <Pagination 
           links={tasks.links} 
           from={tasks.from} 
           to={tasks.to} 
@@ -139,6 +139,6 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
                 projects={projects}
                 task={editingTask}
             />
-        </AppLayout>
+        </>
     );
 }

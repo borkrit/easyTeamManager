@@ -1,3 +1,4 @@
+import { usePagination } from '@/shared/hooks/usePagination';
 import { Link } from '@inertiajs/react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
@@ -32,7 +33,12 @@ const paginationItemVariants = cva(
     }
 );
 
-export function Pagination({ links, from, to, total, prevUrl, nextUrl }: PaginationUIProps) {
+export function Pagination({ links, from, to, total }: PaginationUIProps) {
+    const { shouldShow, prevUrl, nextUrl } = usePagination(links);
+    
+        if (!shouldShow) {
+            return null;
+        }
     return (
         <div className="flex items-center justify-between border-t border-slate-800 px-4 py-3 sm:px-6 mt-4">
             
