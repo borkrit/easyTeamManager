@@ -1,5 +1,3 @@
-import React from 'react';
-import { AppLayout } from '@/app/layouts/AppLayout';
 import { Button } from '@/shared/ui/button';
 import { Head, Link } from '@inertiajs/react';
 import { StatCard } from './components/StatCard';

@@ -1,7 +1,6 @@
-import React from 'react';
+
 import { Head, usePage } from '@inertiajs/react';
-import { TaskTable, PaginationWidget,UiTask } from '@/widgets'; 
-import { AppLayout } from '@/app/layouts/AppLayout';
+import { TaskTable,UiTask } from '@/widgets'; 
 import { Pagination } from '@/shared/ui/pagination';
 
 
@@ -36,7 +35,7 @@ export default function ProfileShow() {
     }
 
     return (
-        <AppLayout>
+        <>
             <div className="py-12 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-slate-100">
                 <Head title="Profil użytkownika" />
 
@@ -89,12 +88,6 @@ export default function ProfileShow() {
                     <TaskTable tasks={tasks ?? { data: [] }} selectable={false} />
 
                     {tasks && (
-                        // <PaginationWidget 
-                        //     links={tasks.links} 
-                        //     from={tasks.from} 
-                        //     to={tasks.to} 
-                        //     total={tasks.total} 
-                        // />
                         <Pagination 
                         links={tasks.links} 
                             from={tasks.from} 
@@ -103,6 +96,6 @@ export default function ProfileShow() {
                     )}
                 </div>
             </div>
-        </AppLayout>
+        </>
     );
 }
