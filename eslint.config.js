@@ -3,6 +3,7 @@ import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 import globals from 'globals';
+import importFsdPlugin from 'eslint-plugin-import-fsd';
 
 export default [
     js.configs.recommended,
@@ -21,16 +22,25 @@ export default [
         },
         plugins: {
             react: pluginReact,
-        },
-        rules: {
-            'react/react-in-jsx-scope': 'off',
-            '@typescript-eslint/no-explicit-any': 'warn',
-            '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+            'import-fsd': importFsdPlugin,
         },
         settings: {
             react: {
                 version: 'detect',
             },
+            fsd: {
+                rootDir: './resources/js', 
+                aliases: {
+                    '@/*': './resources/js/*',
+                },
+            },
+        },
+        rules: {
+            'react/react-in-jsx-scope': 'off',
+            '@typescript-eslint/no-explicit-any': 'warn',
+            '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+
+            'import-fsd/no-denied-layers': 'error', 
         },
     },
     {

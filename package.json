@@ -31,6 +31,7 @@
         "clsx": "^2.1.1",
         "concurrently": "^10.0.3",
         "eslint": "^9.39.5",
+        "eslint-plugin-import-fsd": "^3.0.4",
         "eslint-plugin-react": "^7.37.5",
         "jsdom": "^27.0.1",
         "laravel-vite-plugin": "^3.1",
