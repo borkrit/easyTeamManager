@@ -1,26 +1,26 @@
-import React from 'react';
+
 import { Head, Link } from '@inertiajs/react';
 import { Badge, BadgeVariant } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 import { BackButton } from '@/shared/ui/backButton';
 
-interface Task {
-  id: number;
-  title: string;
-  status: 'do_zrobienia' | 'w_trakcie' | 'zakonczone';
-  priority: string;
-  project?: {
-    id: number;
-    name: string;
-  };
-}
+// interface Task {
+//   id: number;
+//   title: string;
+//   status: App.Enums.TaskStatus;
+//   priority: string;
+//   project?: {
+//     id: number;
+//     name: string;
+//   };
+// }
 
-interface Project {
-  id: number;
-  name: string;
-  description?: string;
-  tasks_count?: number;
-}
+// interface Project {
+//   id: number;
+//   name: string;
+//   description?: string;
+//   tasks_count?: number;
+// }
 
 interface MemberDetail {
   id: number;
@@ -28,15 +28,15 @@ interface MemberDetail {
   email: string;
   role: string;
   created_at: string;
-  tasks: Task[];
-  projects: Project[];
+  tasks: App.Data.TaskData[];
+  projects: App.Data.ProjectData[];
 }
 
 interface TeamShowProps {
   member: MemberDetail;
 }
 
-const statusBadges: Record<string, { label: string; variant: BadgeVariant }> = {
+const statusBadges: Record<App.Enums.TaskStatus, { label: string; variant: BadgeVariant }> = {
   do_zrobienia: { label: 'Do zrobienia', variant: 'do_zrobienia' },
   w_trakcie: { label: 'W trakcie', variant: 'w_trakcie' },
   zakonczone: { label: 'Zakończone', variant: 'zakonczone' },
@@ -92,8 +92,8 @@ export default function TeamShow({ member }: TeamShowProps) {
                   >
                     <div>
                       <h3 className="text-sm font-semibold text-slate-200">{task.title}</h3>
-                      {task.project && (
-                        <p className="text-xs text-indigo-400 mt-0.5">Projekt: {task.project.name}</p>
+                      {task.projectName && (
+                        <p className="text-xs text-indigo-400 mt-0.5">Projekt: {task.projectName}</p>
                       )}
                     </div>
                     <Badge variant={status.variant} size="sm">
@@ -117,8 +117,10 @@ export default function TeamShow({ member }: TeamShowProps) {
             <p className="text-sm text-slate-500 py-4">Brak przypisanych projektów.</p>
           ) : (
             <div className="space-y-3">
-              {member.projects.map((project) => (
-                <div
+              {member.projects.map((project) => {
+                console.log(project)
+                return (
+<div
                   key={project.id}
                   className="p-4 bg-slate-950 border border-slate-800/80 rounded-xl flex items-center justify-between"
                 >
@@ -131,10 +133,13 @@ export default function TeamShow({ member }: TeamShowProps) {
                     )}
                   </div>
                   <span className="text-xs text-slate-500 font-medium">
-                    {project.tasks_count ?? 0} zadań
+                    {project.tasks_count+1 ?? 0} zadań
                   </span>
                 </div>
-              ))}
+                )
+              }
+                
+              )}
             </div>
           )}
         </div>

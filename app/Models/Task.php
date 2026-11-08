@@ -6,10 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use App\Enums\TaskStatus;
+use App\Enums\TaskPriority;
 
 class Task extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'status' => TaskStatus::class,
+        'priority' => TaskPriority::class,
+    ];
 
     protected $fillable = [
         'title',

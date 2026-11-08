@@ -20,8 +20,8 @@ declare namespace App {
             id: number;
             title: string;
             description: string | null;
-            status: string;
-            priority: unknown;
+            status: App.Enums.TaskStatus;
+            priority: App.Enums.TaskPriority;
             user_id: number;
             user: App.Data.UserData | null;
             project_id: number | null;
@@ -39,5 +39,9 @@ declare namespace App {
             projects_count: number | null;
             created_at: undefined | null;
         };
+    }
+    namespace Enums {
+        export type TaskPriority = "niski" | "sredni" | "wysoki";
+        export type TaskStatus = "do_zrobienia" | "w_trakcie" | "zakonczone";
     }
 }

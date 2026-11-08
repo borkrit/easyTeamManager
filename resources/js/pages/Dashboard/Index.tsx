@@ -13,7 +13,7 @@ interface RecentTask {
   id: number;
   title: string;
   projectName: string;
-  status: 'do_zrobienia' | 'w_trakcie' | 'zakonczone';
+  status: App.Enums.TaskStatus;
   assigneeName: string | null;
 }
 

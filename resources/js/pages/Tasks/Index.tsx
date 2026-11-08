@@ -13,7 +13,7 @@ interface User {
 interface Project {
     id: number;
     name: string;
-    users?: User[];
+    users?: App.Data.UserData[];
 }
 
 interface TasksIndexProps {
@@ -21,8 +21,8 @@ interface TasksIndexProps {
         data: UiTask[];
         [key: string]: any;
     };
-    users: User[];
-    projects: Project[];
+    users: App.Data.UserData[];
+    projects: App.Data.ProjectData[];
     filters: {
         status?: string;
         project_id?: string;

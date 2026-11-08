@@ -2,10 +2,10 @@
 import { Head} from '@inertiajs/react';
 import { CreateTeamModal, PageHeader, TeamTable, useTeamForm } from '@/widgets';
 
-type TeamMember = App.Data.UserData;
+// type TeamMember = App.Data.UserData;
 
 interface TeamIndexProps {
-  members: TeamMember[];
+  members: App.Data.UserData[];
 }
 
 export default function TeamIndex({ members }: TeamIndexProps) {

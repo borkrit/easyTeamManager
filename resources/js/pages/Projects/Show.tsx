@@ -5,9 +5,9 @@ import { Comments, CreateProjectModal } from '@/widgets/index';
 import { BackButton } from '@/shared/ui/backButton';
 import { useDeleteResource } from '@/shared/hooks/useDeleteResource';
 
-type Project = App.Data.ProjectData;
+// type Project = App.Data.ProjectData;
 interface ShowProps {
-    project: Project;
+    project: App.Data.ProjectData;
     allUsers: { id: number; name: string }[];
 }
 

@@ -4,11 +4,6 @@ import { TaskTable,UiTask } from '@/widgets';
 import { Pagination } from '@/shared/ui/pagination';
 
 
-interface User {
-    id: number;
-    name: string;
-    email: string;
-}
 
 
 interface PaginatedData<T> {
@@ -21,7 +16,7 @@ interface PaginatedData<T> {
 
 export default function ProfileShow() {
     const { auth, tasks } = usePage().props as unknown as { 
-        auth?: { user?: User };
+        auth?: { user?: App.Data.UserData };
         tasks?: PaginatedData<UiTask>;
     };
     const user = auth?.user;
