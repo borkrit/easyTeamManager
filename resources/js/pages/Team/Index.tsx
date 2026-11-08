@@ -2,7 +2,6 @@
 import { Head} from '@inertiajs/react';
 import { CreateTeamModal, PageHeader, TeamTable, useTeamForm } from '@/widgets';
 
-// type TeamMember = App.Data.UserData;
 
 interface TeamIndexProps {
   members: App.Data.UserData[];
