@@ -1,6 +1,6 @@
 import { Button } from '@/shared/ui/button';
 import { Head, Link } from '@inertiajs/react';
-import { StatCard } from './components/StatCard';
+import { StatCard } from './ui/StatCard';
 
 interface DashboardStats {
   totalProjects: number;
