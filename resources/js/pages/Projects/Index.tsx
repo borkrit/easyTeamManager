@@ -1,6 +1,7 @@
-import  { useState } from 'react';
 import { Head } from '@inertiajs/react';
 import { ProjectTable, UiProject, CreateProjectModal, PageHeader } from '@/widgets/index';
+import { useModal } from '@/shared/hooks/useModal';
+import { useSelection } from '@/shared/hooks/useSelection';
 
 interface ProjectsIndexProps {
     projects: UiProject[];
@@ -8,48 +9,40 @@ interface ProjectsIndexProps {
 }
 
 export default function ProjectsIndex({ projects, users = [] }: ProjectsIndexProps) {
-    const [selectedIds, setSelectedIds] = useState<number[]>([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const { selectedIds, toggleSelectAll, toggleSelectOne } = useSelection(projects);
 
-    const toggleSelectAll = (checked: boolean) => {
-        if (checked) {
-            setSelectedIds(projects.map((p) => p.id));
-        } else {
-            setSelectedIds([]);
-        }
-    };
-
-    const toggleSelectOne = (id: number) => {
-        setSelectedIds((prev) =>
-            prev.includes(id) ? prev.filter((item_id) => item_id !== id) : [...prev, id]
-        );
-    };
+    const { 
+        isOpen: isModalOpen, 
+        data: editingProject, 
+        openCreate: handleOpenCreateModal, 
+        openEdit: handleOpenEditModal, 
+        close: handleCloseModal 
+    } = useModal<UiProject>();
 
     return (
         <>
             <Head title="Projekty" />
 
-
-
             <PageHeader
-                    title="Zarządzanie projektami"
-                    description="Przeglądaj, twórz i edytuj projekty zespołu."
-                    actionLabel="+ Nowy projekt"
-                    onActionClick={() => setIsModalOpen(true)}
-                  />
-
+                title="Zarządzanie projektami"
+                description="Przeglądaj, twórz i edytuj projekty zespołu."
+                actionLabel="+ Nowy projekt"
+                onActionClick={handleOpenCreateModal}
+            />
 
             <ProjectTable
                 projects={projects}
                 selectedIds={selectedIds}
                 onSelectAll={toggleSelectAll}
                 onSelectOne={toggleSelectOne}
+                onEditProject={handleOpenEditModal}
             />
 
             <CreateProjectModal
                 isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
+                onClose={handleCloseModal}
                 users={users}
+                initialData={editingProject}
             />
         </>
     );
