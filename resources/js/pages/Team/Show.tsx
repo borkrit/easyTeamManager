@@ -1,8 +1,8 @@
 import { Head } from '@inertiajs/react';
 import { BackButton } from '@/shared/ui/backButton';
-import { TeamProfileHeader } from './components/TeamProfileHeader';
-import { TeamTasksList } from './components/TeamTasksList';
-import { TeamProjectsList } from './components/TeamProjectsList';
+import { TeamProfileHeader } from './ui/TeamProfileHeader';
+import { TeamTasksList } from './ui/TeamTasksList';
+import { TeamProjectsList } from './ui/TeamProjectsList';
 
 interface MemberDetail {
   id: number;
