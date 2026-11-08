@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Data;
-
+use App\Enums\TaskStatus;
+use App\Enums\TaskPriority;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Optional;
 use Carbon\Carbon;
@@ -14,9 +15,8 @@ class TaskData extends Data
         public int $id,
         public string $title,
         public ?string $description,
-        public string $status,
-        /** @var 'niski'|'sredni'|'wysoki' */
-        public ?string $priority,
+        public TaskStatus $status,
+        public TaskPriority $priority,
         public int $user_id,
         public ?UserData $user,
         public ?int $project_id,

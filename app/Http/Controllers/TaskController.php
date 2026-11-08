@@ -128,7 +128,7 @@ public function index(Request $request): Response
 
         return Inertia::render('Tasks/Show', [
             'task' => TaskData::from($task),
-            'allProjects' => Project::select('id', 'name')->get(),
+            'allProjects' => Project::with('users:id,name')->select('id', 'name')->get(), 
             'allUsers' => User::select('id', 'name')->get(),
         ]);
     }
