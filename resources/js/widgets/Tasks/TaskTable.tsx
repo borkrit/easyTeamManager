@@ -1,6 +1,6 @@
 import { DataTable, Column } from '@/shared/ui/table';
 import { Link } from '@inertiajs/react';
-import { PaginationWidget } from '..';
+
 
 export type UiTask = App.Data.TaskData
 

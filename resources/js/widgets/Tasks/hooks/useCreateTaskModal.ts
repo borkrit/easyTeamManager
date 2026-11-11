@@ -20,6 +20,7 @@ export interface CreateTaskModalProps {
     users: User[];
     projects?: Project[];
     task?: UiTask | null;
+    initialData?: UiTask | null;
 }
 
 interface TaskFormValues {

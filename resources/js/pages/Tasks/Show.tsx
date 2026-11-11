@@ -14,6 +14,7 @@ interface TaskShowProps {
 
 export default function TaskShow({ task, allProjects = [], allUsers = [] }: TaskShowProps) {
     const { isEditModalOpen, openEditModal, closeEditModal } = useTaskShow();
+    
 
     return (
         <>
@@ -51,7 +52,7 @@ export default function TaskShow({ task, allProjects = [], allUsers = [] }: Task
                 onClose={closeEditModal}
                 projects={allProjects}
                 users={allUsers}
-                task={task}
+                initialData={task}
             />
         </>
     );

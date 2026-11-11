@@ -4,6 +4,7 @@ import { Pagination } from '@/shared/ui/pagination';
 import { useTaskSelection } from './hooks/useTaskSelection';
 import { useTaskModal } from './hooks/useTaskModal';
 import { BulkActionsBar } from './ui/BulkActionsBar';
+import { useModal } from '@/shared/hooks/useModal';
 
 interface TasksIndexProps {
     tasks: {
@@ -35,13 +36,13 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
         handleBulkSubmit,
     } = useTaskSelection(tasks.data);
 
-    const {
-        isTaskModalOpen,
-        editingTask,
-        handleOpenCreateModal,
-        handleOpenEditModal,
-        handleCloseModal,
-    } = useTaskModal();
+    const { 
+        isOpen: isTaskModalOpen, 
+        data: editingTask, 
+        openCreate: handleOpenCreateModal, 
+        openEdit: handleOpenEditModal, 
+        close: handleCloseModal 
+    } = useModal<UiTask>();
 
     return (
         <>
@@ -88,7 +89,7 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
                 onClose={handleCloseModal}
                 users={users}
                 projects={projects}
-                task={editingTask}
+                initialData={editingTask}
             />
         </>
     );
