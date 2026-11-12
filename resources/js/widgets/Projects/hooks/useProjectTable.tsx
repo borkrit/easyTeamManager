@@ -41,7 +41,7 @@ export const useProjectTable = () => {
                             <div 
                                 key={user.id} 
                                 title={user.name}
-                                className="inline-block h-7 w-7 rounded-full ring-2 ring-slate-900 bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 text-xs font-bold flex items-center justify-center"
+                                className=" h-7 w-7 rounded-full ring-2 ring-slate-900 bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 text-xs font-bold flex items-center justify-center"
                             >
                                 {user.name.charAt(0).toUpperCase()}
                             </div>
