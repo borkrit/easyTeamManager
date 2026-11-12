@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import { getPageTitleByUrl } from '@/shared/config/pageTitles';
-import { UserProfile } from '@/shared/ui/UserProfile';
+import { getPageTitleByUrl } from '@/shared/config';
+import { UserProfile } from '@/shared/ui/userProfile';
 
 interface HeaderProps {
     userName?: string;
