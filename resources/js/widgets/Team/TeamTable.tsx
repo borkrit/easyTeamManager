@@ -7,9 +7,6 @@ import { TeamTableProps } from './types/types';
 
 export function TeamTable({ 
     users, 
-    selectedUserIds = [], 
-    onSelectAll, 
-    onSelectOne 
 }: TeamTableProps) {
     const { deleteItem: deleteUser } = useDeleteResource('team');  
     const columns = useTeamColumns({ onDelete: deleteUser });

@@ -1,9 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Header } from './Header';
 
-// Создаем декоратор для мока Inertia usePage в Storybook
 const withInertiaMock = (Story: any, context: { args: any }) => {
-    // В реальном проекте можно использовать storybook-addon-inertia или простой мок
     window.history.pushState({}, '', context.args.currentUrl || '/dashboard');
     return <Story />;
 };

@@ -6,7 +6,7 @@ const mockMutate = vi.fn();
 const mockOnClose = vi.fn();
 const mockSetData = vi.fn();
 
-let mockHookReturn = {
+const mockHookReturn = {
     isEditing: false,
     data: {
         title: '',

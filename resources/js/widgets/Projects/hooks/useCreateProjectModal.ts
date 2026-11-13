@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
 import { useApiMutation } from '@/shared/hooks/useApiMutation';
-import { ProjectData, ProjectUser, ProjectFormValues } from '../types/types';
+import { ProjectData, ProjectFormValues } from '../types/types';
 
 interface UseCreateProjectModalProps {
     isOpen: boolean;

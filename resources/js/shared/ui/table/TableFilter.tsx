@@ -34,7 +34,7 @@ const tableFiltersVariants = cva(
 interface TableFiltersUIProps extends VariantProps<typeof tableFiltersVariants> {
     fields: FilterField[];
     values: Record<string, any>;
-    onChange: (name: string, value: any) => void;
+    onChange: (name: string, value: unknown) => void;
     onReset: () => void;
     className?: string;
 }

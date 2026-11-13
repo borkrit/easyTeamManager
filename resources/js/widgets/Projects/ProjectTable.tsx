@@ -14,9 +14,6 @@ interface ProjectTableProps {
 
 export function ProjectTable({ 
     projects, 
-    selectedIds = [], 
-    onSelectAll, 
-    onSelectOne 
 }: ProjectTableProps) {
     const { columns } = useProjectTable();
 
