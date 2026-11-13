@@ -1,7 +1,7 @@
 export { Header } from './Header/Header';
 export { Sidebar } from './Sidebar/Sidebar';
 export { TaskTable } from './Tasks/TaskTable';
-export type { UiTask } from './Tasks/TaskTable';
+export type { UiTask } from './Tasks/types/types';
 export  { CreateTaskModal } from './Tasks/CreateTaskModal';
 
 export  { PageHeader } from './PageHeader/PageHeader';
