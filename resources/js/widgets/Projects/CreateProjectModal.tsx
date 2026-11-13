@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
-import { useForm } from '@inertiajs/react';
 import { ModalFormWrapper } from '@/shared/ui/modalFormWrapper';
 import { FormRenderer, FormFieldConfig } from '@/shared/ui/formRenderer';
-import { ProjectData, ProjectUser,ProjectFormValues } from './types/types';
+import { ProjectData, ProjectUser } from './types/types';
 import { Label } from '@/shared/ui/label';
-
+import { useCreateProjectModal } from './hooks/useCreateProjectModal';
 
 interface CreateProjectModalProps {
     isOpen: boolean;
@@ -13,51 +11,18 @@ interface CreateProjectModalProps {
     initialData?: ProjectData | null;
 }
 
-export function CreateProjectModal({
-    isOpen,
-    onClose,
-    users = [],
-    initialData = null,
-}: CreateProjectModalProps) {
-    const isEditing = Boolean(initialData?.id);
+export function CreateProjectModal(props: CreateProjectModalProps) {
+    const { isOpen, onClose, users = [] } = props;
 
-    const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm<ProjectFormValues>({
-        name: '',
-        description: '',
-        user_ids: [],
-    });
-
-    useEffect(() => {
-        if (isOpen) {
-            if (initialData) {
-                setData({
-                    name: initialData.name || '',
-                    description: initialData.description || '',
-                    user_ids: initialData.users ? initialData.users.map((u) => u.id) : [],
-                });
-            } else {
-                reset();
-            }
-            clearErrors();
-        }
-    }, [isOpen, initialData]);
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const options = {
-            onSuccess: () => {
-                reset();
-                onClose();
-            },
-        };
-
-        if (isEditing && initialData?.id) {
-            put(`/projects/${initialData.id}`, options);
-        } else {
-            post('/projects', options);
-        }
-    };
+    const {
+        isEditing,
+        data,
+        setData,
+        processing,
+        errors,
+        handleSubmit,
+        toggleUser,
+    } = useCreateProjectModal(props);
 
     const fields: FormFieldConfig[] = [
         {
@@ -108,12 +73,7 @@ export function CreateProjectModal({
                                     <input
                                         type="checkbox"
                                         checked={isChecked}
-                                        onChange={() => {
-                                            const updated = isChecked
-                                                ? userIds.filter((id) => id !== user.id)
-                                                : [...userIds, user.id];
-                                            setData('user_ids', updated);
-                                        }}
+                                        onChange={() => toggleUser(user.id)}
                                         className="rounded border-slate-700 bg-slate-900 text-indigo-600 focus:ring-indigo-500/20"
                                     />
                                     <span className="text-sm text-slate-300">{user.name}</span>
