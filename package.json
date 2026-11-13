@@ -9,7 +9,7 @@
         "build-storybook": "storybook build",
         "test": "vitest",
         "test:run": "vitest run",
-        "lint": "eslint .",
+        "lint": "eslint resources/js",
         "check": "vitest run --reporter=json --outputFile=test-results.json && tsc --noEmit && eslint ."
     },
     "devDependencies": {

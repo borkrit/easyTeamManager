@@ -44,7 +44,7 @@ class TaskData extends Data
             title: $task->title,
             description: $task->description,
             status: $task->status,
-            priority: $task->priority ?? 'sredni',
+            priority: $task->priority ?? TaskPriority::SREDNI,
             user_id: $task->user_id,
             user: $task->relationLoaded('user') && $task->user ? UserData::from($task->user) : null,
             project_id: $task->project_id,

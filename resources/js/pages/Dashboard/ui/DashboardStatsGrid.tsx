@@ -1,15 +1,8 @@
+import { DashboardStats, DashboardStatsGridProps } from '../types/types';
 import { StatCard } from './StatCard';
 
-interface DashboardStats {
-    totalProjects: number;
-    totalTasks: number;
-    completedTasks: number;
-    totalTeamMembers: number;
-}
 
-interface DashboardStatsGridProps {
-    stats: DashboardStats;
-}
+
 
 export const DashboardStatsGrid = ({ stats }: DashboardStatsGridProps) => {
     return (

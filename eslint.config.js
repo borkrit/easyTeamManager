@@ -1,4 +1,3 @@
-// eslint.config.js
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
@@ -6,6 +5,10 @@ import globals from 'globals';
 import importFsdPlugin from 'eslint-plugin-import-fsd';
 
 export default [
+    {
+        ignores: ['vendor/**/*', 'public/**/*', 'storage/**/*','resources/js/generated/**/*','dist/**/*',
+            'build/**/*','storybook-static/**/*',],
+    },
     js.configs.recommended,
     ...tseslint.configs.recommended,
     {
@@ -43,7 +46,5 @@ export default [
             'import-fsd/no-denied-layers': 'error', 
         },
     },
-    {
-        ignores: ['vendor/**/*', 'public/**/*', 'storage/**/*'],
-    },
+    
 ];

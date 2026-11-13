@@ -4,26 +4,9 @@ import { DashboardHeader } from './ui/DashboardHeader';
 import { DashboardStatsGrid } from './ui/DashboardStatsGrid';
 import { DashboardRecentTasks } from './ui/DashboardRecentTasks';
 import { DashboardSystemInfo } from './ui/DashboardSystemInfo';
+import { DashboardProps } from './types/types';
 
-interface DashboardStats {
-  totalProjects: number;
-  totalTasks: number;
-  completedTasks: number;
-  totalTeamMembers: number;
-}
 
-interface RecentTask {
-  id: number;
-  title: string;
-  projectName: string;
-  status: App.Enums.TaskStatus;
-  assigneeName: string | null;
-}
-
-interface DashboardProps {
-  stats: DashboardStats;
-  recentTasks: RecentTask[];
-}
 
 export default function DashboardIndex({ stats, recentTasks }: DashboardProps) {
   return (

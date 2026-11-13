@@ -1,12 +1,6 @@
-interface StatCardProps {
-  title: string;
-  value: number | string;
-  icon: string;
-  colorTheme?: 'indigo' | 'blue' | 'emerald' | 'purple';
-  isHighlighted?: boolean;
-}
+import { ColorTheme, StatCardProps, ThemeClasses } from "../types/types";
 
-const themeStyles = {
+const themeStyles:Record<ColorTheme,ThemeClasses> = {
   indigo: { bg: 'bg-indigo-600/10', border: 'border-indigo-500/20', text: 'text-indigo-400' },
   blue: { bg: 'bg-blue-600/10', border: 'border-blue-500/20', text: 'text-blue-400' },
   emerald: { bg: 'bg-emerald-600/10', border: 'border-emerald-500/20', text: 'text-emerald-400' },
@@ -14,7 +8,7 @@ const themeStyles = {
 };
 
 
-export function StatCard({ title, value, icon, colorTheme = 'indigo', isHighlighted = false }: StatCardProps) {
+export function StatCard({ title, value, icon, colorTheme='indigo', isHighlighted = false }: StatCardProps) {
   const theme = themeStyles[colorTheme];
 
   return (

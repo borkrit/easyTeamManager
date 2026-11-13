@@ -1,16 +1,6 @@
 import { Link } from '@inertiajs/react';
+import { DashboardRecentTasksProps } from '../types/types';
 
-interface RecentTask {
-    id: number;
-    title: string;
-    projectName: string;
-    status: App.Enums.TaskStatus;
-    assigneeName: string | null;
-}
-
-interface DashboardRecentTasksProps {
-    recentTasks: RecentTask[];
-}
 
 export const DashboardRecentTasks = ({ recentTasks }: DashboardRecentTasksProps) => {
     return (
