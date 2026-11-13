@@ -1,23 +1,21 @@
 import { Head } from '@inertiajs/react';
-import { ProjectTable, UiProject, CreateProjectModal, PageHeader } from '@/widgets/index';
-import { useModal } from '@/shared/hooks/useModal';
-import { useSelection } from '@/shared/hooks/useSelection';
+import { ProjectTable, CreateProjectModal, PageHeader } from '@/widgets/index';
+import { useProjectsIndex } from './hooks/useProjectsIndex';
+import { ProjectsIndexProps } from './types/types';
 
-interface ProjectsIndexProps {
-    projects: UiProject[];
-    users?: { id: number; name: string }[];
-}
+
 
 export default function ProjectsIndex({ projects, users = [] }: ProjectsIndexProps) {
-    const { selectedIds, toggleSelectAll, toggleSelectOne } = useSelection(projects);
-
-    const { 
-        isOpen: isModalOpen, 
-        data: editingProject, 
-        openCreate: handleOpenCreateModal, 
-        openEdit: handleOpenEditModal, 
-        close: handleCloseModal 
-    } = useModal<UiProject>();
+    const {
+        selectedIds,
+        toggleSelectAll,
+        toggleSelectOne,
+        isModalOpen,
+        editingProject,
+        handleOpenCreateModal,
+        handleOpenEditModal,
+        handleCloseModal,
+    } = useProjectsIndex(projects);
 
     return (
         <>

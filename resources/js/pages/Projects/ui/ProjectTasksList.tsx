@@ -1,6 +1,5 @@
-interface ProjectTasksListProps {
-    tasks?: Array<{ id: number; title: string; status: string }>;
-}
+import { ProjectTasksListProps } from "../types/types";
+
 
 export const ProjectTasksList = ({ tasks = [] }: ProjectTasksListProps) => {
     return (

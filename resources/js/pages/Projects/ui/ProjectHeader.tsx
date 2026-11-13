@@ -1,11 +1,6 @@
 import { Button } from '@/shared/ui/button';
+import { ProjectHeaderProps } from '../types/types';
 
-interface ProjectHeaderProps {
-    name: string;
-    description?: string | null;
-    onEdit: () => void;
-    onDelete: () => void;
-}
 
 export const ProjectHeader = ({ name, description, onEdit, onDelete }: ProjectHeaderProps) => {
     return (

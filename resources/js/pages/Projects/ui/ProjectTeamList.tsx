@@ -1,7 +1,6 @@
+import { ProjectTeamListProps } from "../types/types";
 
-interface ProjectTeamListProps {
-    users?: Array<{ id: number; name: string }>;
-}
+
 
 export const ProjectTeamList = ({ users = [] }: ProjectTeamListProps) => {
     return (

@@ -1,25 +1,20 @@
-
 import { Head } from '@inertiajs/react';
 import { Comments, CreateProjectModal } from '@/widgets/index'; 
 import { BackButton } from '@/shared/ui/backButton';
-import { useDeleteResource } from '@/shared/hooks/useDeleteResource';
 import { ProjectHeader } from './ui/ProjectHeader';
 import { ProjectTasksList } from './ui/ProjectTasksList';
 import { ProjectTeamList } from './ui/ProjectTeamList';
-import { useModal } from '@/shared/hooks/useModal';
+import { useProjectShow } from './hooks/useProjectShow';
+import { ShowProps } from './types/types';
 
-interface ShowProps {
-    project: App.Data.ProjectData;
-    allUsers: { id: number; name: string }[];
-}
 
 export default function ProjectShow({ project, allUsers }: ShowProps) {
-    const { 
-        isOpen: isEditModalOpen, 
-        openEdit: openEditModal, 
-        close: closeEditModal 
-    } = useModal<App.Data.ProjectData>();
-    const { deleteItem: deleteProject } = useDeleteResource('projects');
+    const {
+        isEditModalOpen,
+        closeEditModal,
+        handleEditClick,
+        handleDeleteClick,
+    } = useProjectShow(project);
 
     return (
         <>
@@ -30,8 +25,8 @@ export default function ProjectShow({ project, allUsers }: ShowProps) {
             <ProjectHeader 
                 name={project.name}
                 description={project.description}
-                onEdit={() => openEditModal(project)}
-                onDelete={() => deleteProject(project.id, project.name)}
+                onEdit={handleEditClick}
+                onDelete={handleDeleteClick}
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
