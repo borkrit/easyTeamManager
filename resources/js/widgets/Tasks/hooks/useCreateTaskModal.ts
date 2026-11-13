@@ -1,36 +1,6 @@
-import React, { useEffect } from 'react';
-import { useForm } from '@inertiajs/react';
-import { UiTask } from '@/widgets/Tasks/TaskTable';
-
-export interface User {
-    id: number;
-    name: string;
-}
-
-export interface Project {
-    id: number;
-    name: string;
-    users?: User[];
-}
-
-export interface CreateTaskModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    projectId?: number;
-    users: User[];
-    projects?: Project[];
-    task?: UiTask | null;
-    initialData?: UiTask | null;
-}
-
-interface TaskFormValues {
-    project_id: number | '';
-    title: string;
-    description: string;
-    user_id: number | '';
-    status: string;
-    priority: 'niski' | 'sredni' | 'wysoki';
-}
+import { useState, useEffect } from 'react';
+import { useApiMutation } from '@/shared/hooks/useApiMutation';
+import { CreateTaskModalProps, TaskFormValues } from '../types/types';
 
 export function useCreateTaskModal({
     isOpen,
@@ -41,15 +11,18 @@ export function useCreateTaskModal({
     task = null,
 }: CreateTaskModalProps) {
     const isEditing = !!task;
+    const { mutate, isLoading: processing } = useApiMutation();
 
-    const { data, setData, post, put, processing, errors, reset, clearErrors } = useForm<TaskFormValues>({
+    const [data, setData] = useState<TaskFormValues>({
         project_id: task?.project_id || projectId || (projects[0]?.id ?? ''),
         title: task?.title || '',
         description: task?.description || '',
         user_id: task?.user_id || '',
         status: task?.status || 'do_zrobienia',
-        priority: (task?.priority as 'niski' | 'sredni' | 'wysoki') || 'sredni',
+        priority: (task?.priority as App.Enums.TaskPriority) || 'sredni',
     });
+
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     useEffect(() => {
         if (isOpen) {
@@ -60,13 +33,19 @@ export function useCreateTaskModal({
                     description: task.description || '',
                     user_id: task.user_id || '',
                     status: task.status,
-                    priority: (task.priority as 'niski' | 'sredni' | 'wysoki') || 'sredni',
+                    priority: (task.priority as App.Enums.TaskPriority) || 'sredni',
                 });
             } else {
-                setData('project_id', projectId || (projects[0]?.id ?? ''));
-                reset('title', 'description', 'user_id', 'status', 'priority');
+                setData({
+                    project_id: projectId || (projects[0]?.id ?? ''),
+                    title: '',
+                    description: '',
+                    user_id: '',
+                    status: 'do_zrobienia',
+                    priority: 'sredni',
+                });
             }
-            clearErrors();
+            setErrors({});
         }
     }, [isOpen, task, projectId]);
 
@@ -77,27 +56,24 @@ export function useCreateTaskModal({
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (isEditing && task) {
-            put(`/tasks/${task.id}`, {
-                onSuccess: () => {
-                    reset();
-                    onClose();
-                },
-            });
-        } else {
-            post('/tasks', {
-                onSuccess: () => {
-                    reset();
-                    onClose();
-                },
-            });
-        }
+        const method = isEditing ? 'put' : 'post';
+        const url = isEditing && task ? `/tasks/${task.id}` : '/tasks';
+
+        mutate(method, url, data, {
+            onSuccess: () => {
+                onClose();
+            },
+            onError: (errs) => {
+                setErrors(errs);
+            },
+        });
     };
 
     return {
         isEditing,
         data,
-        setData,
+        setData: (field: keyof TaskFormValues, value: any) =>
+            setData((prev) => ({ ...prev, [field]: value })),
         processing,
         errors,
         availableUsers,
