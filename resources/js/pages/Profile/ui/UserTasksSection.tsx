@@ -1,17 +1,9 @@
 import { TaskTable, UiTask } from '@/widgets';
 import { Pagination } from '@/shared/ui/pagination';
-
-interface PaginatedData<T> {
-    data: T[];
-    links: { url: string | null; label: string; active: boolean }[];
-    from: number | null;
-    to: number | null;
-    total: number;
-}
-
+import { PaginatedData } from '../types/types';
 
 interface UserTasksSectionProps {
-    tasks?: PaginatedData<UiTask>;
+    tasks?: PaginatedData<App.Data.TaskData>;
 }
 
 export const UserTasksSection = ({ tasks }: UserTasksSectionProps) => {

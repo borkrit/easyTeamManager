@@ -1,25 +1,12 @@
-import { Head, usePage } from '@inertiajs/react';
-import { UiTask } from '@/widgets'; 
+import { Head } from '@inertiajs/react';
 import { UserProfileHeader } from './ui/UserProfileHeader';
 import { UserTasksSection } from './ui/UserTasksSection';
-
-interface PaginatedData<T> {
-    data: T[];
-    links: { url: string | null; label: string; active: boolean }[];
-    from: number | null;
-    to: number | null;
-    total: number;
-}
+import { useUserProfile } from './hooks/useUserProfile';
 
 export default function ProfileShow() {
-    const { auth, tasks } = usePage().props as unknown as { 
-        auth?: { user?: App.Data.UserData };
-        tasks?: PaginatedData<UiTask>;
-    };
-    
-    const user = auth?.user;
+    const { user, tasks, isAuthenticated } = useUserProfile();
 
-    if (!user) {
+    if (!isAuthenticated || !user) {
         return (
             <div className="p-8 text-slate-100 flex items-center justify-center min-h-[50vh]">
                 <p className="text-slate-400 text-sm">Ładowanie profilu lub brak autoryzacji...</p>
