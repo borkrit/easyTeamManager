@@ -1,20 +1,15 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import TasksIndex from '../Index'; // Укажите правильный путь к вашему файлу страницы
+import TasksIndex from '../Index';
+import { UiTask } from '@/widgets/index';
 
-// Мокаем Inertia Head, чтобы не было ошибок контекста
 vi.mock('@inertiajs/react', () => ({
     Head: ({ title }: { title: string }) => <title>{title}</title>,
-    router: {
-        get: vi.fn(),
-        post: vi.fn(),
-    },
 }));
 
-// Мокаем хуки выбора задач и модалки
 vi.mock('../hooks/useTaskSelection', () => ({
     useTaskSelection: () => ({
-        selectedTaskIds: [],
+        selectedTaskIds: [1],
         bulkAction: '',
         setBulkAction: vi.fn(),
         isProcessing: false,
@@ -24,51 +19,58 @@ vi.mock('../hooks/useTaskSelection', () => ({
     }),
 }));
 
-vi.mock('@/shared/hooks/useModal', () => ({
-    useModal: () => ({
-        isOpen: false,
-        data: null,
-        openCreate: vi.fn(),
-        openEdit: vi.fn(),
-        close: vi.fn(),
-    }),
+vi.mock('@/widgets/index', () => ({
+    PageHeader: ({ onActionClick }: { onActionClick: () => void }) => (
+        <button onClick={onActionClick}>+ Utwórz zadanie</button>
+    ),
+    TaskFilters: () => <div data-testid="task-filters">Filters Mock</div>,
+    TaskTable: ({ onEditTask }: { onEditTask: (task: UiTask) => void }) => (
+        <div data-testid="task-table">
+            <button onClick={() => onEditTask({ id: 1, title: 'Edit Me' } as UiTask)}>
+                Edit Task
+            </button>
+        </div>
+    ),
+    CreateTaskModal: ({ isOpen, initialData }: { isOpen: boolean; initialData?: UiTask }) =>
+        isOpen ? (
+            <div data-testid="task-modal">
+                Modal: {initialData ? initialData.title : 'Create'}
+            </div>
+        ) : null,
+}));
+
+vi.mock('../ui/BulkActionsBar', () => ({
+    BulkActionsBar: ({ selectedCount }: { selectedCount: number }) => (
+        <div data-testid="bulk-bar">Selected: {selectedCount}</div>
+    ),
+}));
+
+vi.mock('@/shared/ui/pagination', () => ({
+    Pagination: () => <div data-testid="pagination">Pagination Mock</div>,
 }));
 
 describe('TasksIndex Page', () => {
-    const mockProps = {
-        tasks: {
-            data: [
-                {
-                    id: 1,
-                    title: 'Zadanie testowe 1',
-                    projectName: 'Projekt Alpha',
-                    assigneeName: 'Jan Kowalski',
-                    status: 'do_zrobienia',
-                    priority: 'sredni',
-                },
-            ] as any,
-            links: [],
-            from: 1,
-            to: 1,
-            total: 1,
-        },
-        users: [
-            { id: 10, name: 'Jan Kowalski' },
-        ] as any, 
-        projects: [
-            { id: 1, name: 'Projekt Alpha' },
-        ] as any, 
-        filters: {},
+    const mockPaginatedTasks = {
+        data: [{ id: 1, title: 'Task 1' }] as UiTask[],
+        links: [],
+        from: 1,
+        to: 1,
+        total: 1,
     };
 
-    it('renders tasks index page with all main widgets', () => {
-        render(<TasksIndex {...mockProps} />);
+    it('renders all sections and opens modal for create and edit actions', () => {
+        render(<TasksIndex tasks={mockPaginatedTasks} users={[]} filters={{}} />);
 
-        expect(screen.getByText('Lista zadań')).toBeInTheDocument();
-        expect(screen.getByText('Zarządzaj zadaniami we wszystkich projektach.')).toBeInTheDocument();
-        
-        expect(screen.getByRole('button', { name: /\+ Utwórz zadanie/i })).toBeInTheDocument();
+        expect(screen.getByTestId('bulk-bar')).toHaveTextContent('Selected: 1');
+        expect(screen.getByTestId('task-filters')).toBeInTheDocument();
+        expect(screen.getByTestId('task-table')).toBeInTheDocument();
+        expect(screen.getByTestId('pagination')).toBeInTheDocument();
+        expect(screen.queryByTestId('task-modal')).not.toBeInTheDocument();
 
-        expect(screen.getByText('Zadanie testowe 1')).toBeInTheDocument();
+        fireEvent.click(screen.getByRole('button', { name: /\+ Utwórz zadanie/i }));
+        expect(screen.getByTestId('task-modal')).toHaveTextContent('Modal: Create');
+
+        fireEvent.click(screen.getByRole('button', { name: /Edit Task/i }));
+        expect(screen.getByTestId('task-modal')).toHaveTextContent('Modal: Edit Me');
     });
 });

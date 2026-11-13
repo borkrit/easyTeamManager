@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useModal } from '@/shared/hooks/useModal';
 
-export const useTaskShow = ()=>{
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+export const useTaskShow = () => {
+    const {
+        isOpen: isEditModalOpen,
+        openCreate: openEditModal,
+        close: closeEditModal,
+    } = useModal<App.Data.TaskData>();
 
     return {
         isEditModalOpen,
-        openEditModal:()=>setIsEditModalOpen(true),
-        closeEditModal:()=>setIsEditModalOpen(false)
-    }
-}
+        openEditModal,
+        closeEditModal,
+    };
+};

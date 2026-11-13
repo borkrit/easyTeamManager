@@ -1,29 +1,12 @@
+
 import { Head } from '@inertiajs/react';
 import { CreateTaskModal, PageHeader, TaskTable, TaskFilters, UiTask } from '@/widgets/index';
 import { Pagination } from '@/shared/ui/pagination';
-import { useTaskSelection } from './hooks/useTaskSelection';
-import { useTaskModal } from './hooks/useTaskModal';
+import { TasksIndexProps } from './types/types';
 import { BulkActionsBar } from './ui/BulkActionsBar';
-import { useModal } from '@/shared/hooks/useModal';
+import { useTasksIndex } from './hooks/useTasksIndex';
 
-interface TasksIndexProps {
-    tasks: {
-        data: UiTask[];
-        links: any[];
-        from: number;
-        to: number;
-        total: number;
-        [key: string]: any;
-    };
-    users: App.Data.UserData[];
-    projects: App.Data.ProjectData[];
-    filters: {
-        status?: string;
-        project_id?: string;
-        search?: string;
-        priority?: string;
-    };
-}
+
 
 export default function TasksIndex({ tasks, users, projects = [], filters }: TasksIndexProps) {
     const {
@@ -34,15 +17,12 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
         toggleSelectAll,
         toggleTaskSelection,
         handleBulkSubmit,
-    } = useTaskSelection(tasks.data);
-
-    const { 
-        isOpen: isTaskModalOpen, 
-        data: editingTask, 
-        openCreate: handleOpenCreateModal, 
-        openEdit: handleOpenEditModal, 
-        close: handleCloseModal 
-    } = useModal<UiTask>();
+        isTaskModalOpen,
+        editingTask,
+        handleOpenCreateModal,
+        handleOpenEditModal,
+        handleCloseModal,
+    } = useTasksIndex(tasks.data);
 
     return (
         <>
@@ -63,10 +43,10 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
                 isLoading={isProcessing}
             />
 
-            <TaskFilters 
-                filters={filters} 
-                users={users} 
-                projects={projects} 
+            <TaskFilters
+                filters={filters}
+                users={users}
+                projects={projects}
             />
 
             <TaskTable
@@ -76,12 +56,12 @@ export default function TasksIndex({ tasks, users, projects = [], filters }: Tas
                 toggleTaskSelection={toggleTaskSelection}
                 onEditTask={handleOpenEditModal}
             />
-             
-            <Pagination 
-                links={tasks.links} 
-                from={tasks.from} 
-                to={tasks.to} 
-                total={tasks.total} 
+
+            <Pagination
+                links={tasks.links}
+                from={tasks.from}
+                to={tasks.to}
+                total={tasks.total}
             />
 
             <CreateTaskModal

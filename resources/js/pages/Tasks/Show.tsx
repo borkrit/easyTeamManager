@@ -5,12 +5,9 @@ import { BackButton } from '@/shared/ui/backButton';
 import { useTaskShow } from './hooks/useTaskShow';
 import { TaskHeader } from './ui/TaskHeader';
 import { TaskDetailsSidebar } from './ui/TaskDetailsSidebar';
+import { TaskShowProps } from './types/types';
 
-interface TaskShowProps {
-    task: App.Data.TaskData;
-    allProjects?: Array<{ id: number; name: string }>; 
-    allUsers?: Array<{ id: number; name: string }>;   
-}
+
 
 export default function TaskShow({ task, allProjects = [], allUsers = [] }: TaskShowProps) {
     const { isEditModalOpen, openEditModal, closeEditModal } = useTaskShow();
