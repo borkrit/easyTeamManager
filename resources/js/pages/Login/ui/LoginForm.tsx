@@ -1,53 +1,61 @@
-// resources/js/pages/Auth/ui/LoginForm.tsx
 import React from 'react';
+import { useForm } from '@inertiajs/react'; 
 import { Button } from '@/shared/ui/button';
+import { Input } from '@/shared/ui/input';
+import { Label } from '@/shared/ui/label';
+import { InputError } from '@/shared/ui/inputError';
+import { useApiMutation } from '@/shared/hooks/useApiMutation';
+import { LoginFormData } from '../types/types';
 
-interface LoginFormProps {
-    data: any;
-    setData: (field: string, value: any) => void;
-    onSubmit: (e: React.FormEvent) => void;
-    processing: boolean;
-    errors: Record<string, string>;
-}
 
-export const LoginForm = ({ data, setData, onSubmit, processing, errors }: LoginFormProps) => {
+export const LoginForm = () => {
+    const { data, setData, errors } = useForm<LoginFormData>({
+        email: '',
+        password: '',
+        remember: false,
+    });
+
+    const { mutate, isLoading } = useApiMutation();
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        mutate('post', '/login', data, {
+            onError: (errs) => {
+                console.error(errs);
+            },
+        });
+    };
+
     return (
         <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
-            <form onSubmit={onSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                        Adres e-mail
-                    </label>
-                    <input
+                    <Label required>Adres e-mail</Label>
+                    <Input
                         type="email"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
-                        placeholder="jan.kowalski@easyripok.pl"
-                        className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                        placeholder="jan.kowalski@easyteammanager.pl"
                         autoComplete="username"
+                        hasError={Boolean(errors.email)}
                         required
                     />
-                    {errors.email && (
-                        <p className="text-xs text-red-400 mt-1.5 font-medium">{errors.email}</p>
-                    )}
+                    <InputError message={errors.email} />
                 </div>
 
                 <div>
-                    <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                        Hasło
-                    </label>
-                    <input
+                    <Label required>Hasło</Label>
+                    <Input
                         type="password"
                         value={data.password}
                         onChange={(e) => setData('password', e.target.value)}
                         placeholder="••••••••"
-                        className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
                         autoComplete="current-password"
+                        hasError={Boolean(errors.password)}
                         required
                     />
-                    {errors.password && (
-                        <p className="text-xs text-red-400 mt-1.5 font-medium">{errors.password}</p>
-                    )}
+                    <InputError message={errors.password} />
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
@@ -67,8 +75,8 @@ export const LoginForm = ({ data, setData, onSubmit, processing, errors }: Login
                         variant="primary"
                         size="md"
                         className="w-full justify-center py-2.5"
-                        disabled={processing}
-                        isLoading={processing}
+                        disabled={isLoading}
+                        isLoading={isLoading}
                     >
                         Zaloguj się
                     </Button>

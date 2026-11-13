@@ -1,25 +1,13 @@
-// resources/js/pages/Auth/Index.tsx
-import React from 'react';
-import { Head, useForm } from '@inertiajs/react';
+
+import { Head } from '@inertiajs/react';
 import { LoginHeader } from './ui/LoginHeader';
 import { LoginForm } from './ui/LoginForm';
+import { LoginProps } from './types/types';
 
-interface LoginProps {
-  status?: string;
-}
+
 
 export default function LoginIndex({ status }: LoginProps) {
-  const { data, setData, post, processing, errors } = useForm({
-    email: '',
-    password: '',
-    remember: false,
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    post('/login');
-  };
-
+  
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center p-4">
       <Head title="Logowanie - EasyTask" />
@@ -33,11 +21,7 @@ export default function LoginIndex({ status }: LoginProps) {
       )}
 
       <LoginForm 
-        data={data}
-        setData={setData}
-        onSubmit={handleSubmit}
-        processing={processing}
-        errors={errors}
+       
       />
 
       <div className="mt-6 text-center text-xs text-slate-500">
