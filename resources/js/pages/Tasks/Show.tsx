@@ -52,7 +52,7 @@ export default function TaskShow({ task, allProjects = [], allUsers = [] }: Task
                 onClose={closeEditModal}
                 projects={allProjects}
                 users={allUsers}
-                initialData={task}
+                task={task}
             />
         </>
     );

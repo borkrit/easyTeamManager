@@ -8,7 +8,6 @@ export const Sidebar: React.FC = () => {
 
     return (
         <aside className="w-64 bg-slate-950 border-r border-slate-800 flex flex-col h-screen sticky top-0">
-            {/* Logo / Nazwa aplikacji */}
             <div className="h-16 border-b border-slate-800 px-6 flex items-center gap-3">
                 <div className="h-8 w-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">
                     ER
@@ -16,7 +15,6 @@ export const Sidebar: React.FC = () => {
                 <span className="font-bold text-slate-100 tracking-wide">EasyTeamManager</span>
             </div>
 
-            {/* Menu nawigacyjne */}
             <nav className="flex-1 px-4 py-6 space-y-1.5">
                 <p className="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
                     Menu główne

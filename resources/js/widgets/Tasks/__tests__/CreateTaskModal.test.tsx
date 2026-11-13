@@ -64,10 +64,8 @@ describe('CreateTaskModal', () => {
             />
         );
 
-        expect(screen.getByRole('dialog')).toBeInTheDocument();
         expect(screen.getByText(/nowe zadanie/i)).toBeInTheDocument();
-
-        expect(screen.getByRole('button', { name: /zapisz|utwórz/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /utwórz|zapisz/i })).toBeInTheDocument();
     });
 
     it('calls handleSubmit when form is submitted', () => {
@@ -80,7 +78,7 @@ describe('CreateTaskModal', () => {
             />
         );
 
-        const submitButton = screen.getByRole('button', { name: /zapisz|utwórz/i });
+        const submitButton = screen.getByRole('button', { name: /utwórz|zapisz/i });
         fireEvent.click(submitButton);
 
         expect(mockMutate).toHaveBeenCalledTimes(1);

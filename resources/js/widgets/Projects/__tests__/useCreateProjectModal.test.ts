@@ -3,32 +3,44 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useCreateProjectModal } from '../hooks/useCreateProjectModal';
 
 const mockMutate = vi.fn();
-vi.mock('@/shared/lib/hooks/useApiMutation', () => ({
+vi.mock('@/shared/hooks/useApiMutation', () => ({
     useApiMutation: () => ({
         mutate: mockMutate,
         isLoading: false,
     }),
 }));
 
-vi.mock('@inertiajs/react', () => ({
-    useForm: (initialValues: any) => {
-        let data = initialValues;
-        return {
-            data: () => data,
-            setData: (keyOrData: any, value?: any) => {
-                if (typeof keyOrData === 'string') {
-                    data[keyOrData] = value;
-                } else {
-                    data = keyOrData;
-                }
-            },
-            processing: false,
-            errors: {},
-            reset: vi.fn(() => { data = initialValues; }),
-            clearErrors: vi.fn(),
-        };
-    },
-}));
+vi.mock('@inertiajs/react', () => {
+    let currentData: any = {};
+    return {
+        useForm: (initialValues: any) => {
+            currentData = { ...initialValues };
+            return {
+                get data() {
+                    return currentData;
+                },
+                setData: (keyOrData: any, value?: any) => {
+                    if (typeof keyOrData === 'string') {
+                        currentData = { ...currentData, [keyOrData]: value };
+                    } else {
+                        currentData = { ...keyOrData };
+                    }
+                },
+                processing: false,
+                errors: {},
+                reset: vi.fn(() => { currentData = { ...initialValues }; }),
+                clearErrors: vi.fn(),
+            };
+        },
+        router: {
+            visit: vi.fn(),
+            get: vi.fn(),
+            post: vi.fn(),
+            put: vi.fn(),
+            delete: vi.fn(),
+        },
+    };
+});
 
 describe('useCreateProjectModal hook', () => {
     beforeEach(() => {
@@ -71,7 +83,11 @@ describe('useCreateProjectModal hook', () => {
         expect(mockMutate).toHaveBeenCalledWith(
             'post',
             '/projects',
-            expect.objectContaining({ name: 'New Project' }),
+            expect.objectContaining({
+                name: 'New Project',
+                description: '',
+                user_ids: [],
+            }),
             expect.any(Object)
         );
     });

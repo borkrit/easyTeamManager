@@ -1,65 +1,80 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-import { Comments } from '../Comments';
+import { renderHook, act } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { useComments } from '../hooks/useComments';
 
-const mockPost = vi.fn();
+const mockMutate = vi.fn();
+vi.mock('@/shared/hooks/useApiMutation', () => ({
+    useApiMutation: () => ({
+        mutate: mockMutate,
+        isLoading: false,
+    }),
+}));
+
 const mockSetData = vi.fn();
+const mockReset = vi.fn();
 
-// Путь к моку должен точно совпадать с импортом в компоненте Comments.tsx
-vi.mock('../hook/useComments', () => ({
-    useComments: () => ({
-        data: { body: '' },
+vi.mock('@inertiajs/react', () => ({
+    useForm: (initialValues: { body: string }) => ({
+        data: initialValues,
         setData: mockSetData,
-        handleSubmit: (e: React.FormEvent) => {
-            e.preventDefault();
-            mockPost();
-        },
         processing: false,
+        reset: mockReset,
+        clearErrors: vi.fn(),
         errors: {},
     }),
 }));
 
-describe('Comments widget component', () => {
-    const mockComments: App.Data.CommentData[] = [
-        {
-            id: 1,
-            body: 'Świetna robota przy zadaniu!',
-            user_id: 1,
-            user: {
-                id: 1,
-                name: 'Anna Nowak',
-                email: 'anna@example.com',
-                role: 'user',
-                tasks_count: 4,
-                projects_count: 2,
-                created_at: null,
-            },
-            created_at: null,
-        },
-    ];
-
-    it('renders comments list correctly with user names and dates', () => {
-        render(<Comments comments={mockComments} commentableType="task" commentableId={1} />);
-
-        expect(screen.getByText('Komentarze')).toBeDefined();
-        expect(screen.getByText('Anna Nowak')).toBeDefined();
-        expect(screen.getByText('Świetna robota przy zadaniu!')).toBeDefined();
+describe('useComments hook', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
     });
 
-    it('renders empty text when comments array is empty', () => {
-        render(<Comments comments={[]} commentableType="task" commentableId={1} />);
+    it('initializes with default values', () => {
+        const { result } = renderHook(() =>
+            useComments({ commentableType: 'task', commentableId: 10 })
+        );
 
-        expect(screen.getByText('Brak komentarzy.')).toBeDefined();
+        expect(result.current.data.body).toBe('');
+        expect(result.current.processing).toBe(false);
+        expect(result.current.errors).toEqual({});
     });
 
-    it('handles form submission correctly', () => {
-        render(<Comments comments={mockComments} commentableType="task" commentableId={1} />);
+    it('submits comment form with correct endpoint for task', () => {
+        const { result } = renderHook(() =>
+            useComments({ commentableType: 'task', commentableId: 42 })
+        );
 
-        const form = screen.getByPlaceholderText('Napisz komentarz...').closest('form');
-        expect(form).not.toBeNull();
+        const mockEvent = { preventDefault: vi.fn() } as unknown as React.FormEvent;
 
-        fireEvent.submit(form!);
+        act(() => {
+            result.current.handleSubmit(mockEvent);
+        });
 
-        expect(mockPost).toHaveBeenCalledTimes(1);
+        expect(mockEvent.preventDefault).toHaveBeenCalled();
+        expect(mockMutate).toHaveBeenCalledWith(
+            'post',
+            '/tasks/42/comments',
+            expect.any(Object),
+            expect.objectContaining({ onSuccess: expect.any(Function) })
+        );
+    });
+
+    it('submits comment form with correct endpoint for project', () => {
+        const { result } = renderHook(() =>
+            useComments({ commentableType: 'project', commentableId: 99 })
+        );
+
+        const mockEvent = { preventDefault: vi.fn() } as unknown as React.FormEvent;
+
+        act(() => {
+            result.current.handleSubmit(mockEvent);
+        });
+
+        expect(mockMutate).toHaveBeenCalledWith(
+            'post',
+            '/projects/99/comments',
+            expect.any(Object),
+            expect.objectContaining({ onSuccess: expect.any(Function) })
+        );
     });
 });

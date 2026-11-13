@@ -19,7 +19,7 @@ describe('Label Component', () => {
         
         const asterisk = screen.getByText('*');
         expect(asterisk).toBeInTheDocument();
-        expect(asterisk).toHaveClass('text-red-500');
+        expect(asterisk).toHaveClass('text-red-400');
     });
 
     it('applies custom className correctly', () => {

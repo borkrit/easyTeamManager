@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { ModalFormWrapper } from '../';
+import { ModalFormWrapper } from '../ModalFormWrapper';
 
 describe('ModalFormWrapper Component', () => {
     const defaultProps = {
@@ -38,7 +38,7 @@ describe('ModalFormWrapper Component', () => {
         const handleSubmit = vi.fn((e) => e.preventDefault());
         render(<ModalFormWrapper {...defaultProps} onSubmit={handleSubmit} />);
 
-        const submitButton = screen.getByRole('button', { name: /zapisz/i });
+        const submitButton = screen.getByRole('button', { name: /utwórz/i });
         fireEvent.click(submitButton);
 
         expect(handleSubmit).toHaveBeenCalledTimes(1);
@@ -47,7 +47,7 @@ describe('ModalFormWrapper Component', () => {
     it('shows loading state on submit button when processing is true', () => {
         render(<ModalFormWrapper {...defaultProps} processing={true} />);
 
-        const submitButton = screen.getByRole('button', { name: /zapisywanie/i });
+        const submitButton = screen.getByRole('button', { name: /ładowanie/i });
         expect(submitButton).toBeDisabled();
     });
 });

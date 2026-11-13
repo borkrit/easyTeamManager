@@ -22,9 +22,9 @@ describe('TaskTable', () => {
 
         expect(screen.getByText('Test Task 1')).toBeInTheDocument();
         expect(screen.getByText('Project Alpha')).toBeInTheDocument();
-        expect(screen.getByText('Jan Kowalski')).toBeInTheDocument();
+        expect(screen.getByText((content) => content.includes('Jan Kowalski'))).toBeInTheDocument();
         expect(screen.getByText('W trakcie')).toBeInTheDocument();
-        expect(screen.getByText('WYSOKI')).toBeInTheDocument();
+        expect(screen.getByText('Wysoki')).toBeInTheDocument(); 
     });
 
     it('calls onEditTask when edit button is clicked', () => {

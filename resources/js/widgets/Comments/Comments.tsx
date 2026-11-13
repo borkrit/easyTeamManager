@@ -1,13 +1,8 @@
 import { Button } from '@/shared/ui/button';
-import { useComments } from './hook/useComments';
-
-type Comment = App.Data.CommentData;
-
-interface CommentsProps {
-    comments: Comment[];
-    commentableType: 'task' | 'project';
-    commentableId: number;
-}
+import { Textarea } from '@/shared/ui/textarea'; 
+import { useComments } from './hooks/useComments';
+import { CommentsProps } from './types/types';
+import { InputError } from '@/shared/ui/inputError';
 
 export function Comments({ comments, commentableType, commentableId }: CommentsProps) {
     const { data, setData, handleSubmit, processing, errors } = useComments({
@@ -38,15 +33,15 @@ export function Comments({ comments, commentableType, commentableId }: CommentsP
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-2">
-                <textarea
+                <Textarea
                     value={data.body}
                     onChange={(e) => setData('body', e.target.value)}
                     placeholder="Napisz komentarz..."
                     rows={2}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-100 focus:outline-none focus:border-indigo-500 resize-none"
+                    hasError={Boolean(errors.body)}
                     required
                 />
-                {errors.body && <p className="text-xs text-red-400">{errors.body}</p>}
+                {errors.body && <InputError message={errors.body}/>}
                 
                 <div className="flex justify-end">
                     <Button variant="primary" size="sm" disabled={processing} isLoading={processing}>

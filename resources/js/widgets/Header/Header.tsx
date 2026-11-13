@@ -2,20 +2,21 @@ import React, { useMemo } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { getPageTitleByUrl } from '@/shared/config';
 import { UserProfile } from '@/shared/ui/userProfile';
+import { HeaderProps } from './types/types';
 
-interface HeaderProps {
-    userName?: string;
-    userEmail?: string;
-}
+
 
 export const Header: React.FC<HeaderProps> = ({ userName, userEmail }) => {
-    const { url, auth } = usePage<any>().props;
+    const page = usePage<any>();
+
+    const currentUrl = page.url || '/dashboard';
+    const auth = page.props?.auth;
 
     const name = userName || auth?.user?.name || 'Administrator';
     const email = userEmail || auth?.user?.email || 'admin@easyripok.pl';
-    const currentUrl = url || '/dashboard';
+   
 
-    const title = useMemo(() => getPageTitleByUrl(currentUrl), [currentUrl]);
+    const title = getPageTitleByUrl(currentUrl);
 
     return (
         <header className="h-16 border-b border-slate-800 bg-slate-950/50 backdrop-blur-md px-6 flex items-center justify-between sticky top-0 z-30">
