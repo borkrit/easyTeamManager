@@ -60,7 +60,7 @@ export const LoginForm = () => {
                         onChange={(e) => setData('password', e.target.value)}
                         placeholder="••••••••"
                         autoComplete="current-password"
-                        hasError={Boolean(errors.password)}
+                        hasError={Boolean(errors.email)}
                         required
                     />
                     
