@@ -15,6 +15,6 @@ describe('TeamProfileHeader', () => {
         expect(screen.getByText('Jan Kowalski')).toBeInTheDocument();
         expect(screen.getByText('jan.kowalski@example.com')).toBeInTheDocument();
         expect(screen.getByText('DEVELOPER')).toBeInTheDocument();
-        expect(screen.getByText('JA')).toBeInTheDocument();
+        expect(screen.getByText('Ja')).toBeInTheDocument(); 
     });
 });

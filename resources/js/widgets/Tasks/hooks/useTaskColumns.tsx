@@ -10,6 +10,7 @@ interface UseTaskColumnsProps {
 export function useTaskColumns({ onEditTask }: UseTaskColumnsProps): Column<UiTask>[] {
     return [
         { 
+            id:'title',
             header: 'Tytuł zadania', 
             accessor: (task) => (
                 <Link
@@ -22,11 +23,13 @@ export function useTaskColumns({ onEditTask }: UseTaskColumnsProps): Column<UiTa
             className: 'font-medium text-slate-200' 
         },
         { 
+            id:'project',
             header: 'Projekt', 
             accessor: (task) => task.projectName ?? '—', 
             className: 'text-slate-400' 
         },
         {
+            id:'assignee',
             header: 'Wykonawca',
             accessor: (task) =>
                 task.assigneeName ? (
@@ -38,6 +41,7 @@ export function useTaskColumns({ onEditTask }: UseTaskColumnsProps): Column<UiTa
                 ),
         },
         {
+            id:'status',
             header: 'Status',
             accessor: (task) => {
                 const { label, className } = getTaskStatusInfo(task.status);
@@ -49,6 +53,7 @@ export function useTaskColumns({ onEditTask }: UseTaskColumnsProps): Column<UiTa
             },
         },
         {
+            id:'priority',
             header: 'Priorytet',
             accessor: (task) => {
                 const { label, className } = getTaskPriorityInfo(task.priority);
@@ -60,6 +65,7 @@ export function useTaskColumns({ onEditTask }: UseTaskColumnsProps): Column<UiTa
             },
         },
         ...(onEditTask ? [{
+            id:'actions',
             header: 'Akcje',
             accessor: (task: UiTask) => (
                 <button

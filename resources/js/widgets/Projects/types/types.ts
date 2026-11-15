@@ -33,3 +33,9 @@ export interface ProjectTableProps {
     onSelectOne?: (id: number) => void;
     onEditProject?: (project: UiProject) => void;
 }
+export interface UseCreateProjectModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    initialData?: ProjectData | null;
+}
+

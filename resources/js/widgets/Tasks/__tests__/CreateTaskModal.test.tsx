@@ -18,7 +18,7 @@ const mockHookReturn = {
     },
     setData: mockSetData,
     processing: false,
-    errors: {},
+    errors: {} as Record<string, string>,
     availableUsers: [{ id: 10, name: 'Jan Kowalski' }],
     hasNoUsers: false,
     handleSubmit: (e: React.FormEvent) => {
@@ -27,7 +27,8 @@ const mockHookReturn = {
     },
 };
 
-vi.mock('./hooks/useCreateTaskModal', () => ({
+// Ścieżka względem TEGO pliku (jest w __tests__/), dlatego '../hooks/...'
+vi.mock('../hooks/useCreateTaskModal', () => ({
     useCreateTaskModal: () => mockHookReturn,
 }));
 
@@ -64,12 +65,12 @@ describe('CreateTaskModal', () => {
             />
         );
 
-        expect(screen.getByText(/nowe zadanie/i)).toBeInTheDocument();
+        expect(screen.getByText(/utwórz nowe zadanie/i)).toBeInTheDocument();
         expect(screen.getByRole('button', { name: /utwórz|zapisz/i })).toBeInTheDocument();
     });
 
     it('calls handleSubmit when form is submitted', () => {
-        render(
+        const { container } = render(
             <CreateTaskModal
                 isOpen={true}
                 onClose={mockOnClose}
@@ -78,8 +79,8 @@ describe('CreateTaskModal', () => {
             />
         );
 
-        const submitButton = screen.getByRole('button', { name: /utwórz|zapisz/i });
-        fireEvent.click(submitButton);
+        const form = container.querySelector('form')!;
+        fireEvent.submit(form);
 
         expect(mockMutate).toHaveBeenCalledTimes(1);
     });

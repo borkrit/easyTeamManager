@@ -13,7 +13,7 @@ describe('useProjectsIndex Hook', () => {
         const { result } = renderHook(() => useProjectsIndex(mockProjects));
 
         expect(result.current.isModalOpen).toBe(false);
-        expect(result.current.editingProject).toBeUndefined();
+        expect(result.current.editingProject).toBeNull(); 
         expect(result.current.selectedIds).toEqual([]);
     });
 
@@ -25,7 +25,7 @@ describe('useProjectsIndex Hook', () => {
         });
 
         expect(result.current.isModalOpen).toBe(true);
-        expect(result.current.editingProject).toBeUndefined();
+        expect(result.current.editingProject).toBeNull(); 
     });
 
     it('opens edit modal with specific project data', () => {
@@ -52,7 +52,7 @@ describe('useProjectsIndex Hook', () => {
             result.current.handleCloseModal();
         });
         expect(result.current.isModalOpen).toBe(false);
-        expect(result.current.editingProject).toBeUndefined();
+        expect(result.current.editingProject).toBeNull(); 
     });
 
     it('handles selection correctly', () => {

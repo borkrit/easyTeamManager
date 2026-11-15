@@ -44,9 +44,9 @@ const mockData: Task[] = [
 ];
 
 const mockColumns: Column<Task>[] = [
-    { header: 'Tytuł', accessor: 'title' },
-    { header: 'Status', accessor: 'status' },
-    { header: 'Projekt', accessor: 'projectName' },
+    { id:'title',header: 'Tytuł', accessor: 'title' },
+    { id:'status',header: 'Status', accessor: 'status' },
+    { id:'project',header: 'Projekt', accessor: 'projectName' },
 ];
 
 export const Default: Story = {

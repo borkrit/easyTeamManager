@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { useState } from 'react';
 import { useCreateProjectModal } from '../hooks/useCreateProjectModal';
 
 const mockMutate = vi.fn();
@@ -11,24 +12,23 @@ vi.mock('@/shared/hooks/useApiMutation', () => ({
 }));
 
 vi.mock('@inertiajs/react', () => {
-    let currentData: any = {};
     return {
         useForm: (initialValues: any) => {
-            currentData = { ...initialValues };
+            const [data, setDataState] = useState(initialValues);
             return {
                 get data() {
-                    return currentData;
+                    return data;
                 },
                 setData: (keyOrData: any, value?: any) => {
                     if (typeof keyOrData === 'string') {
-                        currentData = { ...currentData, [keyOrData]: value };
+                        setDataState((prev: any) => ({ ...prev, [keyOrData]: value }));
                     } else {
-                        currentData = { ...keyOrData };
+                        setDataState(keyOrData);
                     }
                 },
                 processing: false,
                 errors: {},
-                reset: vi.fn(() => { currentData = { ...initialValues }; }),
+                reset: vi.fn(() => { setDataState(initialValues); }),
                 clearErrors: vi.fn(),
             };
         },
@@ -83,11 +83,11 @@ describe('useCreateProjectModal hook', () => {
         expect(mockMutate).toHaveBeenCalledWith(
             'post',
             '/projects',
-            expect.objectContaining({
+            {
                 name: 'New Project',
                 description: '',
                 user_ids: [],
-            }),
+            },
             expect.any(Object)
         );
     });

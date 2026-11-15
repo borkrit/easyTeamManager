@@ -6,8 +6,15 @@ import importFsdPlugin from 'eslint-plugin-import-fsd';
 
 export default [
     {
-        ignores: ['vendor/**/*', 'public/**/*', 'storage/**/*','resources/js/generated/**/*','dist/**/*',
-            'build/**/*','storybook-static/**/*',],
+        ignores: [
+            'vendor/**/*', 
+            'public/**/*', 
+            'storage/**/*',
+            'resources/js/generated/**/*',
+            'dist/**/*',
+            'build/**/*',
+            'storybook-static/**/*',
+        ],
     },
     js.configs.recommended,
     ...tseslint.configs.recommended,
@@ -43,8 +50,27 @@ export default [
             '@typescript-eslint/no-explicit-any': 'warn',
             '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
 
-            'import-fsd/no-denied-layers': 'error', 
+            'import-fsd/no-denied-layers': 'error',
+
+            'no-restricted-syntax': [
+                'error',
+                {
+                    selector: "CallExpression[callee.object.name='router'][callee.property.name=/^(post|put|patch|delete)$/]",
+                    message: 'Прямые мутации через router (post/put/patch/delete) запрещены. Используй кастомные хуки (useApiMutation, useFormModal и т.д.).',
+                },
+            ], 
         },
     },
-    
+    {
+        files: ['resources/js/shared/hooks/**/*.{ts,tsx}'],
+        rules: {
+            'no-restricted-syntax': 'off',
+        },
+    },
+    {
+        files: ['resources/js/widgets/**/*.{ts,tsx}'],
+        rules: {
+            'import-fsd/no-denied-layers': 'error',
+        },
+    },
 ];

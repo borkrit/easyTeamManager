@@ -1,22 +1,18 @@
 import { useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
 import { useApiMutation } from '@/shared/hooks/useApiMutation';
-import { ProjectData, ProjectFormValues } from '../types/types';
+import {ProjectFormValues, UseCreateProjectModalProps } from '../types/types';
 
-interface UseCreateProjectModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    initialData?: ProjectData | null;
-}
+
 
 export const useCreateProjectModal = ({ isOpen, onClose, initialData }: UseCreateProjectModalProps) => {
     const isEditing = Boolean(initialData?.id);
     const { mutate, isLoading: isMutating } = useApiMutation();
 
     const { data, setData, processing, errors, reset, clearErrors } = useForm<ProjectFormValues>({
-        name: '',
-        description: '',
-        user_ids: [],
+        name: initialData?.name || '',
+        description: initialData?.description || '',
+        user_ids: initialData?.users ? initialData.users.map((u) => u.id) : [],
     });
 
     useEffect(() => {

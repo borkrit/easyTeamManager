@@ -15,8 +15,8 @@ describe('DataTable component', () => {
     ];
 
     const mockColumns: Column<TestItem>[] = [
-        { header: 'Nazwa', accessor: 'name' },
-        { header: 'Status', accessor: (item) => <span data-testid={`status-${item.id}`}>{item.status}</span> },
+        {id:'name', header: 'Nazwa', accessor: 'name' },
+        { id:'status',header: 'Status', accessor: (item) => <span data-testid={`status-${item.id}`}>{item.status}</span> },
     ];
 
     it('renders table headers and data correctly', () => {

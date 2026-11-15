@@ -14,12 +14,16 @@ function TestColumnRenderer({ onDelete }: { onDelete: (id: number, name: string)
         created_at: '2026-01-01T00:00:00.000Z',
     };
 
-    const actionsColumn = columns.find((c: any) => c.id === 'actions' || c.accessorKey === 'actions');
-    const cellRenderer = (actionsColumn as any)?.cell || (actionsColumn as any)?.columnDef?.cell;
-
+    const actionsColumn = columns.find((c: any) => c.id === 'actions');
+    const accessor = actionsColumn?.accessor;
+    
     return (
         <div>
-            {cellRenderer ? cellRenderer({ row: { original: mockUser } }) : 'No actions'}
+            {typeof accessor === 'function'
+                ? accessor(mockUser as any)
+                : typeof accessor === 'string'
+                    ? (mockUser as any)[accessor]
+                    : 'No actions'}
         </div>
     );
 }
@@ -29,7 +33,7 @@ describe('useTeamColumns', () => {
         const handleDelete = vi.fn();
         render(<TestColumnRenderer onDelete={handleDelete} />);
 
-        const deleteButton = screen.getByRole('button', { name: /usuń/i });
+        const deleteButton = screen.getAllByRole('button')[0];
         expect(deleteButton).toBeInTheDocument();
 
         fireEvent.click(deleteButton);

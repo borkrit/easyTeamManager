@@ -2,6 +2,7 @@ import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 export interface Column<T> {
+    id:string;
     header: string;
     accessor: keyof T | ((item: T) => React.ReactNode);
     className?: string;

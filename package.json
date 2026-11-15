@@ -10,7 +10,7 @@
         "test": "vitest",
         "test:run": "vitest run",
         "lint": "eslint resources/js",
-        "check": "vitest run --reporter=json --outputFile=test-results.json && tsc --noEmit && eslint ."
+        "check": "tsc --noEmit && eslint . && vitest run"
     },
     "devDependencies": {
         "@chromatic-com/storybook": "latest",

@@ -1,3 +1,4 @@
+// resources/js/widgets/Team/hooks/useTeamColumns.ts
 import { Link } from '@inertiajs/react';
 import { Column } from '@/shared/ui/table';
 
@@ -7,7 +8,7 @@ interface UseTeamColumnsProps {
 
 export function useTeamColumns({ onDelete }: UseTeamColumnsProps): Column<App.Data.UserData>[] {
     return [
-        { 
+        {   id:'title',
             header: 'Imię i nazwisko', 
             accessor: (user) => (
                 <div className="flex items-center gap-3">
@@ -22,6 +23,7 @@ export function useTeamColumns({ onDelete }: UseTeamColumnsProps): Column<App.Da
             ) 
         },
         { 
+            id:'rola',
             header: 'Rola', 
             accessor: (user) => (
                 <span className="inline-flex px-2.5 py-1 rounded-md text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
@@ -29,7 +31,7 @@ export function useTeamColumns({ onDelete }: UseTeamColumnsProps): Column<App.Da
                 </span>
             ) 
         },
-        { 
+        { id:'project',
             header: 'Projekty', 
             accessor: (user) => (
                 <span className="text-slate-300 font-medium">
@@ -38,7 +40,7 @@ export function useTeamColumns({ onDelete }: UseTeamColumnsProps): Column<App.Da
             ),
             className: 'text-center w-28'
         },
-        { 
+        { id:'zadania',
             header: 'Zadania', 
             accessor: (user) => (
                 <span className="text-slate-300 font-medium">
@@ -48,6 +50,7 @@ export function useTeamColumns({ onDelete }: UseTeamColumnsProps): Column<App.Da
             className: 'text-center w-28'
         },
         {
+            id:'created',
             header: 'Dołączył',
             accessor: (user) => (
                 <span className="text-xs text-slate-400">
@@ -56,6 +59,7 @@ export function useTeamColumns({ onDelete }: UseTeamColumnsProps): Column<App.Da
             )
         },
         {
+            id: 'actions', 
             header: 'Akcje',
             accessor: (team: App.Data.UserData) => (
                 <div className="flex items-center justify-end gap-2">

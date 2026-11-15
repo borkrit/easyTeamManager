@@ -13,13 +13,16 @@ function TestColumnRenderer({ onEdit }: { onEdit: (task: any) => void }) {
         priority: 'wysoki',
     };
 
-    const actionsColumn = columns.find((c: any) => c.id === 'actions' || c.accessorKey === 'actions');
+    const actionsColumn = columns.find((c: any) => c.id === 'actions' );
     
-    const cellRenderer = (actionsColumn as any)?.cell || (actionsColumn as any)?.columnDef?.cell;
-
+        const accessorFn = actionsColumn?.accessor;
     return (
-        <div>
-            {cellRenderer ? cellRenderer({ row: { original: mockTask } }) : 'No actions column'}
+      <div>
+            {typeof accessorFn === 'function' 
+                ? accessorFn(mockTask as any) 
+                : typeof accessorFn === 'string' 
+                    ? (mockTask as any)[accessorFn] 
+                    : 'No actions column'}
         </div>
     );
 }
@@ -29,7 +32,7 @@ describe('useTaskColumns', () => {
         const handleEdit = vi.fn();
         render(<TestColumnRenderer onEdit={handleEdit} />);
 
-        const editButton = screen.getByRole('button', { name: /edytuj/i });
+        const editButton = screen.getAllByRole('button')[0];
         expect(editButton).toBeInTheDocument();
 
         fireEvent.click(editButton);

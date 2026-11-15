@@ -8,6 +8,7 @@ export const useProjectTable = () => {
 
     const columns: Column<UiProject>[] = [
         { 
+            id:'title',
             header: 'Nazwa projektu', 
             accessor: (project) => (
                 <div>
@@ -24,6 +25,7 @@ export const useProjectTable = () => {
             ) 
         },
         { 
+            id:'tasks',
             header: 'Zadania', 
             accessor: (project) => (
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 text-xs font-medium border border-slate-700">
@@ -33,6 +35,7 @@ export const useProjectTable = () => {
             className: 'w-36'
         },
         { 
+            id:'users',
             header: 'Zespół', 
             accessor: (project) => (
                 <div className="flex -space-x-2 overflow-hidden">
@@ -53,6 +56,7 @@ export const useProjectTable = () => {
             ) 
         },
         {
+            id:'created',
             header: 'Utworiono',
             accessor: (project) => (
                 <span className="text-xs text-slate-400">
@@ -62,6 +66,7 @@ export const useProjectTable = () => {
             className: 'w-36'
         },
         {
+            id:'actions',
             header: 'Akcje',
             accessor: (project: UiProject) => (
                 <div className="flex items-center justify-end gap-2">

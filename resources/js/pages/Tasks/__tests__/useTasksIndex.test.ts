@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useTasksIndex } from '../hooks/useTasksIndex';
 import { useTaskSelection } from '../hooks/useTaskSelection';
 
-vi.mock('../useTaskSelection', () => ({
+vi.mock('../hooks/useTaskSelection', () => ({
     useTaskSelection: vi.fn(),
 }));
 
@@ -28,13 +28,13 @@ describe('useTasksIndex Hook', () => {
         const { result } = renderHook(() => useTasksIndex(mockTasks));
 
         expect(result.current.isTaskModalOpen).toBe(false);
-        expect(result.current.editingTask).toBeUndefined();
+        expect(result.current.editingTask).toBeNull();
 
         act(() => {
             result.current.handleOpenCreateModal();
         });
         expect(result.current.isTaskModalOpen).toBe(true);
-        expect(result.current.editingTask).toBeUndefined();
+        expect(result.current.editingTask).toBeNull();
 
         act(() => {
             result.current.handleOpenEditModal(mockTasks[0]);
@@ -46,6 +46,6 @@ describe('useTasksIndex Hook', () => {
             result.current.handleCloseModal();
         });
         expect(result.current.isTaskModalOpen).toBe(false);
-        expect(result.current.editingTask).toBeUndefined();
+        expect(result.current.editingTask).toBeNull();
     });
 });
