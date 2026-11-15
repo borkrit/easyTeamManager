@@ -1,8 +1,4 @@
-interface PaginationLink {
-    url: string | null;
-    label: string;
-    active: boolean;
-}
+import { PaginationLink } from '@/shared/types/types';
 
 export function usePagination(links: PaginationLink[]) {
     if (!links || links.length <= 3) {
@@ -12,7 +8,7 @@ export function usePagination(links: PaginationLink[]) {
             nextUrl: null,
         };
     }
-    const shouldShow = links && links.length > 3;
+    const shouldShow = links.length > 3;
     const prevUrl = links[0]?.url;
     const nextUrl = links[links.length - 1]?.url;
 

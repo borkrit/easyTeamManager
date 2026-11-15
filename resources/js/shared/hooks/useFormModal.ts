@@ -1,4 +1,3 @@
-// resources/js/shared/hooks/useFormModal.ts
 import { useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
 

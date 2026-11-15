@@ -1,9 +1,6 @@
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
-
-interface FilterValues {
-    [key: string]: any;
-}
+import { FilterValues } from '@/shared/types/types';
 
 export function useTableFilters(initialFilters: FilterValues) {
     const [filters, setFilters] = useState<FilterValues>(initialFilters);

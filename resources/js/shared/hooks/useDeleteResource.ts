@@ -1,11 +1,5 @@
 import { router } from '@inertiajs/react';
-
-type ResourceType = 'projects' | 'team' | 'tasks';
-
-interface UseDeleteOptions {
-    confirmMessage?: string;
-    onSuccess?: () => void;
-}
+import { ResourceType, UseDeleteOptions } from '@/shared/types/types';
 
 export function useDeleteResource(resourceType: ResourceType, options?: UseDeleteOptions) {
     const resourceLabels: Record<ResourceType, { pl: string; genitive: string }> = {

@@ -1,15 +1,6 @@
-
 import { useState } from 'react';
 import { router } from '@inertiajs/react';
-
-type HttpMethod = 'post' | 'put' | 'patch' | 'delete';
-
-interface MutationOptions {
-    onSuccess?: () => void;
-    onError?: (errors: Record<string, any>) => void;
-    preserveScroll?: boolean;
-    preserveState?: boolean;
-}
+import { HttpMethod, MutationOptions } from '@/shared/types/types';
 
 export const useApiMutation = () => {
     const [isLoading, setIsLoading] = useState(false);

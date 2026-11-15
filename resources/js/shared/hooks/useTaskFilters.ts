@@ -1,11 +1,7 @@
 import { useTableFilters } from '@/shared/hooks/useTableFilters';
+import { ProjectOption, TaskFilterOptions } from '@/shared/types/types';
 
-interface Project {
-    id: number;
-    name: string;
-}
-
-export function useTaskFilters(initialFilters: Record<string, any>, projects: Project[]) {
+export function useTaskFilters(initialFilters: TaskFilterOptions, projects: ProjectOption[]) {
     const { filters, handleFilterChange, handleReset } = useTableFilters(initialFilters);
 
     const fields = [

@@ -1,3 +1,4 @@
+// resources/js/shared/hooks/useSelection.ts
 import { useState } from 'react';
 
 export function useSelection<T extends { id: number }>(items: T[]) {
