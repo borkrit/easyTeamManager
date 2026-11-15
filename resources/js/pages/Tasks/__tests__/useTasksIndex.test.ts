@@ -2,7 +2,6 @@ import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useTasksIndex } from '../hooks/useTasksIndex';
 import { useTaskSelection } from '../hooks/useTaskSelection';
-import { UiTask } from '@/widgets/index';
 
 vi.mock('../useTaskSelection', () => ({
     useTaskSelection: vi.fn(),
@@ -11,7 +10,7 @@ vi.mock('../useTaskSelection', () => ({
 const mockedUseTaskSelection = vi.mocked(useTaskSelection);
 
 describe('useTasksIndex Hook', () => {
-    const mockTasks = [{ id: 1, title: 'Task 1' }] as UiTask[];
+    const mockTasks = [{ id: 1, title: 'Task 1' }] as App.Data.TaskData[];
 
     beforeEach(() => {
         mockedUseTaskSelection.mockReturnValue({
@@ -25,7 +24,7 @@ describe('useTasksIndex Hook', () => {
         });
     });
 
-    it('manages create and edit modal state properly', () => {
+    it('manages create and edit modal state correctly', () => {
         const { result } = renderHook(() => useTasksIndex(mockTasks));
 
         expect(result.current.isTaskModalOpen).toBe(false);

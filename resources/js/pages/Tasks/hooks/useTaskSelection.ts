@@ -1,41 +1,37 @@
-import { useApiMutation } from "@/shared/hooks/useApiMutation";
-import { UiTask } from "@/widgets";
-import { useState } from "react";
+// resources/js/pages/Tasks/hooks/useTaskSelection.ts
+import { useState } from 'react';
+import { useApiMutation } from '@/shared/hooks/useApiMutation';
+import { useSelection } from '@/shared/hooks/useSelection';
 
-export const useTaskSelection = (tasksData:UiTask[])=>{
-    const [selectedTaskIds, setSelectedTaskIds] = useState<number[]>([]);
+export const useTaskSelection = (tasksData: App.Data.TaskData[]) => {
+    const {
+        selectedIds: selectedTaskIds,
+        toggleSelectAll,
+        toggleSelectOne: toggleTaskSelection,
+        clearSelection,
+    } = useSelection(tasksData);
+
     const [bulkAction, setBulkAction] = useState<string>('');
-    const {mutate, isLoading} = useApiMutation()
-
-    const toggleSelectAll = (checked: boolean) => {
-        if (checked) {
-            setSelectedTaskIds(tasksData.map((task) => task.id));
-        } else {
-            setSelectedTaskIds([]);
-        }
-    };
-
-    const toggleTaskSelection = (id: number) => {
-        if (selectedTaskIds.includes(id)) {
-            setSelectedTaskIds(selectedTaskIds.filter((taskId) => taskId !== id));
-        } else {
-            setSelectedTaskIds([...selectedTaskIds, id]);
-        }
-    };
+    const { mutate, isLoading } = useApiMutation();
 
     const handleBulkSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!bulkAction || selectedTaskIds.length === 0) return;
 
-        mutate('post','/tasks/bulk-action', {
-            action: bulkAction,
-            task_ids: selectedTaskIds,
-        }, {
-            onSuccess: () => {
-                setSelectedTaskIds([]);
-                setBulkAction('');
+        mutate(
+            'post',
+            '/tasks/bulk-action',
+            {
+                action: bulkAction,
+                task_ids: selectedTaskIds,
             },
-        });
+            {
+                onSuccess: () => {
+                    clearSelection();
+                    setBulkAction('');
+                },
+            }
+        );
     };
 
     return {
@@ -47,5 +43,4 @@ export const useTaskSelection = (tasksData:UiTask[])=>{
         toggleTaskSelection,
         handleBulkSubmit,
     };
-
-}
+};

@@ -1,4 +1,4 @@
-
+// resources/js/pages/Tasks/ui/TaskHeader.tsx
 import { Badge, BadgeVariant } from '@/shared/ui/badge';
 import { Button } from '@/shared/ui/button';
 
@@ -10,7 +10,7 @@ interface TaskHeaderProps {
 const statusBadges: Record<App.Enums.TaskStatus, { label: string; variant: BadgeVariant }> = {
     do_zrobienia: { label: 'Do zrobienia', variant: 'do_zrobienia' },
     w_trakcie: { label: 'W trakcie', variant: 'w_trakcie' },
-    zakonczone: { label: 'Zakończone', variant: 'zakonczone' },
+    zakonczone: { label: 'Zakończone', variant: 'zakonczone' }, // Исправлена кодировка
 };
 
 export const TaskHeader = ({ task, onEditClick }: TaskHeaderProps) => {
