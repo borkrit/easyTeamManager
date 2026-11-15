@@ -56,7 +56,7 @@ export function useCreateTeamModal(props: CreateTeamModalProps) {
     return {
         isEditing,
         data,
-        setData: (field: keyof TeamFormValues, value: any) =>
+        setData: (field: keyof TeamFormValues, value: unknown) =>
             setData((prev) => ({ ...prev, [field]: value })),
         processing,
         errors,

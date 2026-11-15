@@ -6,6 +6,12 @@ import { createInertiaApp } from '@inertiajs/react';
 import { AppLayout } from './app/layouts/AppLayout';
 import React from 'react';
 
+interface PageModule {
+    default: React.ComponentType<unknown> & {
+        layout?: (pageNode: React.ReactNode) => React.ReactNode;
+    };
+}
+
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'EasyTeamManager';
 
 createInertiaApp({
@@ -13,7 +19,7 @@ createInertiaApp({
     
     resolve: (name) => {
         const pages = import.meta.glob('./pages/**/*.tsx', { eager: true });
-        const page = pages[`./pages/${name}.tsx`] as any;
+        const page = pages[`./pages/${name}.tsx`] as unknown as PageModule;
         
         if (!page) {
             throw new Error(`Page not found: ${name}`);

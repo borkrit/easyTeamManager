@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { getPageTitleByUrl } from '@/shared/config';
 import { UserProfile } from '@/shared/ui/userProfile';

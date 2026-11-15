@@ -28,3 +28,6 @@ Thumbs.db
 
 *storybook.log
 storybook-static
+
+test-results.json
+

@@ -16,7 +16,6 @@ function TestColumnRenderer({ onDelete }: { onDelete: (id: number, name: string)
 
     const actionsColumn = columns.find((c: any) => c.id === 'actions');
     const accessor = actionsColumn?.accessor;
-    
     return (
         <div>
             {typeof accessor === 'function'

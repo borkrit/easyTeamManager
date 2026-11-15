@@ -24,7 +24,7 @@ export function useTeamForm() {
             },
             onError: (errors) => {
                 if (errors) {
-                    form.setError(errors as any);
+                    form.setError(errors as Record<string, unknown>);
                 }
             },
         });

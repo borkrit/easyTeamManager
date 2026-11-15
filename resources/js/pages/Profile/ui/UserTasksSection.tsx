@@ -1,4 +1,4 @@
-import { TaskTable, UiTask } from '@/widgets';
+import { TaskTable } from '@/widgets';
 import { Pagination } from '@/shared/ui/pagination';
 import { PaginatedData } from '../types/types';
 

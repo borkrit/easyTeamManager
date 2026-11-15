@@ -1,6 +1,6 @@
 import { usePagination } from '@/shared/hooks/usePagination';
 import { Link } from '@inertiajs/react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 
 interface PaginationLink {
     url: string | null;

@@ -12,7 +12,7 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   plugins: [laravel({
-    input: ['resources/css/app.css', 'resources/js/app.js'],
+    input: ['resources/css/app.css', 'resources/js/app.ts'],
     refresh: true,
     fonts: [bunny('Instrument Sans', {
       weights: [400, 500, 600]

@@ -19,5 +19,5 @@ export interface TeamFormValues {
     email: string;
     password: string;
     role: string;
-    [key: string]: any; 
+    [key: string]: unknown; 
 }

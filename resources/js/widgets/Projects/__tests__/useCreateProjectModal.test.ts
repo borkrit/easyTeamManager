@@ -13,15 +13,15 @@ vi.mock('@/shared/hooks/useApiMutation', () => ({
 
 vi.mock('@inertiajs/react', () => {
     return {
-        useForm: (initialValues: any) => {
+        useForm: (initialValues: unknown) => {
             const [data, setDataState] = useState(initialValues);
             return {
                 get data() {
                     return data;
                 },
-                setData: (keyOrData: any, value?: any) => {
+                setData: (keyOrData: unknown, value?: unknown) => {
                     if (typeof keyOrData === 'string') {
-                        setDataState((prev: any) => ({ ...prev, [keyOrData]: value }));
+                        setDataState((prev: Record<string, unknown>) => ({ ...prev, [keyOrData]: value }));
                     } else {
                         setDataState(keyOrData);
                     }

@@ -1,6 +1,6 @@
 
 import { Head } from '@inertiajs/react';
-import { CreateTaskModal, PageHeader, TaskTable, TaskFilters, UiTask } from '@/widgets/index';
+import { CreateTaskModal, PageHeader, TaskTable, TaskFilters } from '@/widgets/index';
 import { Pagination } from '@/shared/ui/pagination';
 import { TasksIndexProps } from './types/types';
 import { BulkActionsBar } from './ui/BulkActionsBar';
