@@ -31,3 +31,16 @@ export interface TaskShowProps {
     allProjects?: Array<{ id: number; name: string }>; 
     allUsers?: Array<{ id: number; name: string }>;   
 }
+
+export interface BulkActionsBarProps {
+    selectedCount: number;
+    bulkAction: string;
+    onActionChange: (action: string) => void;
+    onSubmit: (e: React.FormEvent) => void;
+    isLoading?: boolean;
+}
+
+export interface TaskHeaderProps {
+    task: App.Data.TaskData;
+    onEditClick: () => void;
+}

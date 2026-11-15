@@ -1,8 +1,6 @@
 import { Badge, BadgeVariant } from '@/shared/ui/badge';
 
-interface TaskDetailsSidebarProps {
-    task: App.Data.TaskData;
-}
+
 
 const priorityBadges: Record<App.Enums.TaskPriority, { label: string; variant: BadgeVariant }> = {
     niski: { label: 'Niski', variant: 'niski' },
@@ -10,7 +8,7 @@ const priorityBadges: Record<App.Enums.TaskPriority, { label: string; variant: B
     wysoki: { label: 'Wysoki', variant: 'wysoki' },
 };
 
-export const TaskDetailsSidebar = ({ task }: TaskDetailsSidebarProps) => {
+export const TaskDetailsSidebar = ({ task }: {task:App.Data.TaskData}) => {
     const priorityInfo = task.priority 
         ? priorityBadges[task.priority as App.Enums.TaskPriority] 
         : null;

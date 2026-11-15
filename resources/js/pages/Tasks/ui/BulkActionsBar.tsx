@@ -1,13 +1,8 @@
 import React from 'react';
 import { Button } from '@/shared/ui/button';
+import { BulkActionsBarProps } from '../types/types';
 
-interface BulkActionsBarProps {
-    selectedCount: number;
-    bulkAction: string;
-    onActionChange: (action: string) => void;
-    onSubmit: (e: React.FormEvent) => void;
-    isLoading?: boolean;
-}
+
 
 export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
     selectedCount,
