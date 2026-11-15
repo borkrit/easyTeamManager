@@ -2,9 +2,12 @@ import React from 'react';
 import { navItems } from '@/shared/config';
 import { useActiveRoute } from './hooks/useActiveRoute';
 import { SidebarItem } from './ui/SidebarItem';
+import { useLogout } from './hooks/useLogout';
 
 export const Sidebar: React.FC = () => {
     const { isRouteActive } = useActiveRoute();
+    const { logout, isLoading } = useLogout();
+    
 
     return (
         <aside className="w-64 bg-slate-950 border-r border-slate-800 flex flex-col h-screen sticky top-0">
@@ -27,7 +30,27 @@ export const Sidebar: React.FC = () => {
                     />
                 ))}
             </nav>
-
+              
+              <button
+                    onClick={logout}
+                    disabled={isLoading}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-red-400 hover:bg-slate-900 transition-colors group"
+                >
+                    <svg
+                        className="w-5 h-5 text-slate-500 group-hover:text-red-400 transition-colors"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                        />
+                    </svg>
+                    {isLoading ? 'Wychodzenie...' : 'Wyloguj się'}
+                </button>
            
             <div className="p-4 border-t border-slate-800">
                 <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-800/60">

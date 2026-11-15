@@ -18,14 +18,20 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     
     resolve: (name) => {
-        const pages = import.meta.glob('./pages/**/*.tsx', { eager: true });
+        const pages = import.meta.glob([
+    './pages/**/*.tsx',
+    '!./pages/**/*.test.tsx',
+    '!./pages/**/*.spec.tsx',
+    '!./pages/**/__tests__/**',
+], { eager: true });;
         const page = pages[`./pages/${name}.tsx`] as unknown as PageModule;
         
         if (!page) {
             throw new Error(`Page not found: ${name}`);
-        }
+        } 
+        const isAuthPage = name.startsWith('Login/') || name === 'Login';
         
-        if (page.default && !page.default.layout) {
+        if (page.default && !page.default.layout && !isAuthPage) {
             page.default.layout = (pageNode: React.ReactNode) => <AppLayout>{pageNode}</AppLayout>;
         }
         

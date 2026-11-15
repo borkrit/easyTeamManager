@@ -10,7 +10,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CommentController;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->check()) {
+        return redirect()->route('dashboard.index');
+    }
+
+    return redirect()->route('login');
 });
 
 Route::middleware('guest')->group(function () {

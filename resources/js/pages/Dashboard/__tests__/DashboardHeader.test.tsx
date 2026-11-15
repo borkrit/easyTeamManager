@@ -1,7 +1,4 @@
-import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { DashboardHeader } from '../ui/DashboardHeader';
-
 vi.mock('@inertiajs/react', () => ({
     Link: ({ children, href }: { children: React.ReactNode; href: string }) => (
         <a href={href}>{children}</a>
@@ -13,6 +10,12 @@ vi.mock('@/shared/ui/button', () => ({
         <button>{children}</button>
     ),
 }));
+
+
+import { render, screen } from '@testing-library/react';
+
+import { DashboardHeader } from '../ui/DashboardHeader';
+
 
 describe('DashboardHeader', () => {
     it('renders welcome message and subtitle', () => {
