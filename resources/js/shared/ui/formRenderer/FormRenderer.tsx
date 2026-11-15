@@ -29,6 +29,7 @@ interface FormRendererProps {
 }
 
 export function FormRenderer({ fields, data, errors, onChange }: FormRendererProps) {
+    console.log(errors)
     return (
         <div className="space-y-4">
             {fields.map((field) => (

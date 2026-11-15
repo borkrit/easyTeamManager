@@ -8,12 +8,16 @@ import {ProjectFormValues, UseCreateProjectModalProps } from '../types/types';
 export const useCreateProjectModal = ({ isOpen, onClose, initialData }: UseCreateProjectModalProps) => {
     const isEditing = Boolean(initialData?.id);
     const { mutate, isLoading: isMutating } = useApiMutation();
+    
 
-    const { data, setData, processing, errors, reset, clearErrors } = useForm<ProjectFormValues>({
+    const { data, setData, processing, errors, reset, clearErrors,setError } = useForm<ProjectFormValues>({
         name: initialData?.name || '',
         description: initialData?.description || '',
         user_ids: initialData?.users ? initialData.users.map((u) => u.id) : [],
     });
+
+     
+    
 
     useEffect(() => {
         if (isOpen) {
@@ -40,6 +44,9 @@ export const useCreateProjectModal = ({ isOpen, onClose, initialData }: UseCreat
             onSuccess: () => {
                 reset();
                 onClose();
+            },
+            onError: (errs) => {
+                setError(errs);
             },
         });
     };
