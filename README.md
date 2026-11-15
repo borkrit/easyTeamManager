@@ -79,7 +79,7 @@ npm run check
 
 Uruchamia po kolei (przerywa przy pierwszym błędzie):
 
-1. `vitest run`: wszystkie testy frontendu (wynik zapisywany też do `test-results.json`),
+1. `vitest run`: wszystkie testy frontendu,
 2. `tsc --noEmit`: sprawdzenie typów (tryb `strict`),
 3. `eslint .`: lint wraz z regułami granic między warstwami.
 
