@@ -1,14 +1,19 @@
-
-import { Head} from '@inertiajs/react';
-import { CreateTeamModal, PageHeader, TeamTable, useTeamForm } from '@/widgets';
-
+import { Head } from '@inertiajs/react';
+import { CreateTeamModal, PageHeader, TeamTable } from '@/widgets';
+import { useTeamIndex } from './hooks/useTeamIndex';
 
 interface TeamIndexProps {
   members: App.Data.UserData[];
 }
 
 export default function TeamIndex({ members }: TeamIndexProps) {
-  const { isModalOpen, setIsModalOpen, form, handleSubmit } = useTeamForm();
+  const {
+    isModalOpen,
+    form,
+    handleSubmit,
+    handleOpenModal,
+    handleCloseModal,
+  } = useTeamIndex();
 
   return (
     <>
@@ -16,8 +21,10 @@ export default function TeamIndex({ members }: TeamIndexProps) {
 
       <PageHeader
         title="Lista członków zespołu"
+        description=""
         actionLabel="+ Dodaj osobę"
-        onActionClick={() => setIsModalOpen(true)} description={''}      />
+        onActionClick={handleOpenModal}
+      />
 
       <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
         <div className="overflow-x-auto">
@@ -27,7 +34,7 @@ export default function TeamIndex({ members }: TeamIndexProps) {
 
       <CreateTeamModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleCloseModal}
         form={form}
         onSubmit={handleSubmit}
       />

@@ -11,7 +11,7 @@ interface MemberDetail {
   role: string;
   created_at: string;
   tasks: App.Data.TaskData[];
-  projects: any[];
+  projects: App.Data.ProjectData[];
 }
 
 interface TeamShowProps {
