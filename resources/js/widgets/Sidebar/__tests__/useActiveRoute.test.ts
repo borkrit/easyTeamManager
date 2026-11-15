@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { useActiveRoute } from '../hook/useActiveRoute';
+import { useActiveRoute } from '../hooks/useActiveRoute';
 
 let mockUrl = '/dashboard';
 

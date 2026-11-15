@@ -1,6 +1,6 @@
 import React from 'react';
 import { navItems } from '@/shared/config';
-import { useActiveRoute } from './hook/useActiveRoute';
+import { useActiveRoute } from './hooks/useActiveRoute';
 import { SidebarItem } from './ui/SidebarItem';
 
 export const Sidebar: React.FC = () => {
