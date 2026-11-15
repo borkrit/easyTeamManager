@@ -55,7 +55,7 @@ npm run dev
 
 Skrót: `composer setup` wykonuje instalację zależności, kopiuje `.env`, generuje klucz, uruchamia migracje i buduje frontend.
 
-**Logowanie:** seeder tworzy użytkownika `test@example.com` z hasłem `password` (z `UserFactory`).
+**Logowanie:** seeder tworzy użytkownika `test@example.com` z hasłem `password123` (z `UserFactory`).
 
 ### Typy generowane z backendu
 
