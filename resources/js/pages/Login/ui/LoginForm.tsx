@@ -9,7 +9,7 @@ import { LoginFormData } from '../types/types';
 
 
 export const LoginForm = () => {
-    const { data, setData, errors } = useForm<LoginFormData>({
+    const { data, setData, errors,setError,clearErrors } = useForm<LoginFormData>({
         email: '',
         password: '',
         remember: false,
@@ -19,10 +19,12 @@ export const LoginForm = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        clearErrors(); 
         
         mutate('post', '/login', data, {
             onError: (errs) => {
                 console.error(errs);
+                setError(errs)
             },
         });
     };
@@ -30,6 +32,12 @@ export const LoginForm = () => {
     return (
         <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
             <form onSubmit={handleSubmit} className="space-y-4">
+                {errors.email && (
+                    <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium flex items-center gap-2">
+                        
+                        <InputError message={errors.email} />
+                    </div>
+                )}
                 <div>
                     <Label required>Adres e-mail</Label>
                     <Input
@@ -41,7 +49,7 @@ export const LoginForm = () => {
                         hasError={Boolean(errors.email)}
                         required
                     />
-                    <InputError message={errors.email} />
+                    
                 </div>
 
                 <div>
@@ -55,7 +63,7 @@ export const LoginForm = () => {
                         hasError={Boolean(errors.password)}
                         required
                     />
-                    <InputError message={errors.password} />
+                    
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
