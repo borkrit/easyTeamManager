@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from '@inertiajs/react';
+import { useApiMutation } from './useApiMutation';
+import { HttpMethod } from '../types/types';
 
 interface UseFormModalProps<T extends Record<string, any>> {
     isOpen: boolean;
@@ -20,37 +22,40 @@ export function useFormModal<T extends Record<string, any>>({
 }: UseFormModalProps<T>) {
     const form = useForm(defaultValues);
 
+    const {mutate, isLoading} = useApiMutation();
+
     useEffect(() => {
-        if (initialData) {
-            form.setData(initialData as any);
-        } else {
-            form.setData(defaultValues);
-        }
+        if (!isOpen) return;
+
+        form.setData(initialData ?? defaultValues);
         form.clearErrors();
-    }, [initialData, isOpen]);
+    }, [initialData, isOpen, defaultValues]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (isEditing && initialData) {
-            form.put(submitUrl, {
-                onSuccess: () => {
-                    onClose();
-                    form.reset();
-                },
-            });
-        } else {
-            form.post(submitUrl, {
-                onSuccess: () => {
-                    onClose();
-                    form.reset();
-                },
-            });
-        }
+        const method: HttpMethod = isEditing && initialData ? 'put' : 'post';
+        sendRequest(method);
     };
+
+    const sendRequest = (method:HttpMethod)=>{
+            mutate(method, submitUrl, form.data, {
+            onSuccess: () => {
+                onClose();
+                form.reset();
+                form.clearErrors();
+            },
+            onError: (errors) => {
+                if (errors) {
+                    form.setError(errors as Record<keyof T, string>)
+                }
+            },
+        });
+    }
 
     return {
         ...form,
+        isLoading,
         handleSubmit,
     };
 }
